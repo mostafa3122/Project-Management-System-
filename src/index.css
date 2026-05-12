@@ -1,4 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
 @import "tailwindcss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+}
+
+.landing {
+  position: relative;
+  background-image: url("/authPic.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
 
 .register-bg {
     background-image: url(./assets/register-bg.jpeg);
