@@ -1,1 +1,17 @@
 @import "tailwindcss";
+
+.register-bg {
+    background-image: url(./assets/register-bg.jpeg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+}
+
+.profile-img {
+    background-image: url(./assets/user-image.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+}
