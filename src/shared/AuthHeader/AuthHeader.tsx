@@ -1,6 +1,4 @@
-import React from "react";
-
-export default function AuthHeader({title}) {
+export default function AuthHeader({ title }) {
   return (
     <div className="auth-header mb-3">
       <h6 className="text-sm text-white">welcome to PMS</h6>
