@@ -1,6 +1,18 @@
 import { z } from "zod";
 import { VALIDATIONS } from "../constant/validation";
 
+export const loginSchema = z
+  .object({
+    email: z
+      .string()
+      .min(1, VALIDATIONS.email.required)
+      .regex(VALIDATIONS.email.regex, VALIDATIONS.email.invalid),
+       password: z
+      .string()
+      .min(1, VALIDATIONS.password.required)
+      .regex(VALIDATIONS.password.regex, VALIDATIONS.password.invalid),
+  
+  })
 export const registerSchema = z
   .object({
     userName: z
