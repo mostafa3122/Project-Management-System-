@@ -49,12 +49,12 @@ export const registerSchema = z
     message: "Passwords do not match",
     path: ["confirmPassword"],
   });
-  
-  export const forgetPasswordSchema = z.object({
+
+export const forgetPasswordSchema = z.object({
   email: z
-      .string()
-      .min(1, VALIDATIONS.email.required)
-      .regex(VALIDATIONS.email.regex, VALIDATIONS.email.invalid),
+    .string()
+    .min(1, VALIDATIONS.email.required)
+    .regex(VALIDATIONS.email.regex, VALIDATIONS.email.invalid),
 });
 
 export const resetPasswordSchema = z
@@ -77,16 +77,34 @@ export const resetPasswordSchema = z
     message: "Passwords do not match",
     path: ["confirmPassword"],
   });
-export const verifyPasswordSchema = z
+export const verifyPasswordSchema = z.object({
+  email: z
+    .string()
+    .min(1, VALIDATIONS.email.required)
+    .regex(VALIDATIONS.email.regex, VALIDATIONS.email.invalid),
+  code: z
+    .string()
+    .min(1, VALIDATIONS.seed.required)
+    .length(4, VALIDATIONS.seed.invalid),
+});
+
+export const changePasswordSchema = z
   .object({
-    email: z
+    oldPassword: z
       .string()
-      .min(1, VALIDATIONS.email.required)
-      .regex(VALIDATIONS.email.regex, VALIDATIONS.email.invalid),
-    code: z
+      .min(1, VALIDATIONS.password.required)
+      .regex(VALIDATIONS.password.regex, VALIDATIONS.password.invalid),
+    newPassword: z
       .string()
-      .min(1, VALIDATIONS.seed.required)
-      .length(4, VALIDATIONS.seed.invalid),
-   
+      .min(1, VALIDATIONS.password.required)
+      .regex(VALIDATIONS.password.regex, VALIDATIONS.password.invalid),
+    confirmPassword: z.string().min(1, VALIDATIONS.confirmPassword.required),
   })
+<<<<<<< HEAD
   
+=======
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+>>>>>>> 534b5fa (implement forget and reset password pages with reusable InputField)

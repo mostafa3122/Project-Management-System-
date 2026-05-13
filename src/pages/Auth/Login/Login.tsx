@@ -12,7 +12,6 @@ import { toast } from "react-toastify";
 import { loginInputs } from "./login.inputs";
 import { useContext } from "react";
 import { userContext } from "../../../context/userContext";
-
 export default function Login() {
   const navigate = useNavigate();
   const { setUserToken } = useContext(userContext)!;

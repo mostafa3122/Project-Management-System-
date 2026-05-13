@@ -29,12 +29,9 @@ export default function ResetPassword() {
         password: data.newPassword,
         confirmPassword: data.confirmPassword,
       });
-
-      console.log("Success Response:", response);
       toast.success(response.data.message || "Password reset successfully!");
       Navigate("/login");
     } catch (error: any) {
-      console.error("API Error:", error);
       toast.error(error.response?.data?.message || "Something went wrong");
     }
   };

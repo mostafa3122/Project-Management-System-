@@ -1,14 +1,13 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import WelcomeComponent from "../pages/WelcomeComponent/WelcomeComponent";
-import NotFound from "../pages/NotFound";
+import ChangePassword from "../pages/Auth/ChangePassword/ChangePassword";
+import ForgetPassword from "../pages/Auth/ForgetPassword/ForgetPassword";
 import Login from "../pages/Auth/Login/Login";
 import Register from "../pages/Auth/Register/Register";
-import VerifyAccount from "../pages/Auth/VerifyAccount/VerifyAccount";
-import ForgetPassword from "../pages/Auth/ForgetPassword/ForgetPassword";
 import ResetPassword from "../pages/Auth/ResetPassword/ResetPassword";
+import VerifyAccount from "../pages/Auth/VerifyAccount/VerifyAccount";
+import NotFound from "../pages/NotFound";
+import WelcomeComponent from "../pages/WelcomeComponent/WelcomeComponent";
 // import ProtectedRoute from "./ProtectedRoutes";
-
-
 
 const routes = createBrowserRouter([
   {
@@ -22,7 +21,7 @@ const routes = createBrowserRouter([
   },
   {
     path: "login",
-    element:<Login /> ,
+    element: <Login />,
   },
   {
     path: "register",
@@ -37,6 +36,10 @@ const routes = createBrowserRouter([
     element: <ForgetPassword />,
   },
   {
+    path: "change-password",
+    element: <ChangePassword />,
+  },
+  {
     path: "reset-password",
     element: <ResetPassword />,
   },
@@ -45,19 +48,19 @@ const routes = createBrowserRouter([
 //     {
 //         path: "/",
 //         element: <WelcomeComponent />,
-//         errorElement: <NotFound />,   
+//         errorElement: <NotFound />,
 //         children: [
-//             {   
+//             {
 //                 index: true,
 //                 element: <WelcomeComponent/>
 //             },
-//             {   
+//             {
 //                path:'login',
-//                element:<Login/> 
+//                element:<Login/>
 //             },
-//             {   
+//             {
 //                path:'register',
-//                element:<Register/> 
+//                element:<Register/>
 //             },
 //             {
 //                 path :'verify-account',
@@ -76,14 +79,12 @@ const routes = createBrowserRouter([
 
 // ])
 
-const Routes = ()=>{
-    return (
-        <>
-        <RouterProvider router={routes} />
-        </>
-        
-
-    )
-}
+const Routes = () => {
+  return (
+    <>
+      <RouterProvider router={routes} />
+    </>
+  );
+};
 
 export default Routes;

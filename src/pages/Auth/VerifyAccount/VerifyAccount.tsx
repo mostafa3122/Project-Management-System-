@@ -1,20 +1,14 @@
-// import React from 'react'
-
-// export default function VerifyAccount() {
-//   return <div>VerifyAccount</div>;
-// }
-import InputField from "../../../shared/InputField/InputField";
-import AuthHeader from "../../../shared/AuthHeader/AuthHeader";
-import bgForget from "../../../assets/PMS3.png";
-import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type z from "zod";
 import { useForm } from "react-hook-form";
-import { verifyPasswordSchema } from "../../../schema/auth.schema";
-import axiosClient from "../../../services/api/axiosClient";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { VerifyInputs } from "./verify.inputs";
+import type z from "zod";
+import bgForget from "../../../assets/PMS3.png";
+import { verifyPasswordSchema } from "../../../schema/auth.schema";
 import { VerifyApi } from "../../../services/api/auth";
+import AuthHeader from "../../../shared/AuthHeader/AuthHeader";
+import InputField from "../../../shared/InputField/InputField";
+import { VerifyInputs } from "./verify.inputs";
 
 export default function VerifyAccount() {
   const Navigate = useNavigate();
@@ -29,7 +23,7 @@ export default function VerifyAccount() {
 
   const onSubmit = async (data: z.infer<typeof verifyPasswordSchema>) => {
     try {
-      const response = await VerifyApi(data)
+      const response = await VerifyApi(data);
       toast.success(response.data.message || "Account Verified successfully!");
       Navigate("/login");
     } catch (error: any) {
