@@ -76,7 +76,7 @@ export default function Login() {
                   />
                 );
               })}
-              <div className="flex justify-between mt-4">
+              <div className="flex justify-between mt-5">
                 <Link
                   to="/register"
                   className="text-sm text-gray-300 hover:text-gray-400 transition-colors"
