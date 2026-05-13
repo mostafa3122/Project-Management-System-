@@ -65,3 +65,16 @@ export const resetPasswordSchema = z
     message: "Passwords do not match",
     path: ["confirmPassword"],
   });
+export const verifyPasswordSchema = z
+  .object({
+    email: z
+      .string()
+      .min(1, VALIDATIONS.email.required)
+      .regex(VALIDATIONS.email.regex, VALIDATIONS.email.invalid),
+    code: z
+      .string()
+      .min(1, VALIDATIONS.seed.required)
+      .length(4, VALIDATIONS.seed.invalid),
+   
+  })
+  

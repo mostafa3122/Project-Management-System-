@@ -1,7 +1,8 @@
-import type { IRegisterData } from "../../../interfaces/auth.interface";
-
+import type z from "zod";
+import type { registerSchema } from "../../../schema/auth.schema";
+type RegisterFormData = z.infer<typeof registerSchema>;
 export const registerInputs: {
-  name: keyof IRegisterData;
+  name: keyof RegisterFormData;
   label: string;
   type: string;
   placeholder: string;

@@ -36,7 +36,7 @@ export default function Register() {
       await RegisterApi(formData);
       toast.success("Account created successfully!");
       navigate("/verify-account");
-    } catch (error: any) {
+    } catch (error) {
       toast.error(error.response?.data?.message || "Something went wrong");
     }
   };
@@ -76,7 +76,10 @@ export default function Register() {
                   inputName={input.name}
                   type={input.type}
                   register={register}
-                  error={errors[input.name]?.message}
+                  error={
+                    errors[input.name as keyof RegisterFormData]
+                      ?.message as string
+                  }
                   placeholder={input.placeholder}
                 />
               ))}

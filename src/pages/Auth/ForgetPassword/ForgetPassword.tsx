@@ -28,7 +28,7 @@ export default function ForgetPassword() {
 
       console.log("Success Response:", response);
       toast.success(response.data.message || "OTP sent to your email!");
-      Navigate("/verify-account");
+      Navigate("/reset-password");
     } catch (error: any) {
       console.error("API Error:", error);
       toast.error(error.response?.data?.message || "Something went wrong");
