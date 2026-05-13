@@ -9,6 +9,8 @@ type InputFieldProps<T extends FieldValues> = {
   value?: string;
   register: UseFormRegister<T>;
   error?: string;
+  fullWidth?: boolean;
+  containerClassName?: string;
 };
 export default function InputField<T extends FieldValues>({
   label,
@@ -17,13 +19,17 @@ export default function InputField<T extends FieldValues>({
   register,
   error,
   placeholder,
+  fullWidth,
+  containerClassName,
 }: //   value,
 //   onChange,
 InputFieldProps<T>) {
   const [showPassword, setShowPassword] = useState(false);
   return (
     <>
-      <div className="w-full md:w-[calc(50%-18px)]  custom-input mb-3  ">
+      <div
+        className={`${fullWidth ? "w-full" : "w-full md:w-[calc(50%-18px)]"}  custom-input mb-3 ${containerClassName || ""} `}
+      >
         <div className="border-b-2 border-gray-400 py-2 flex flex-col gap-0.5 relative">
           {/* lable */}
           <label htmlFor="userName" className="text-[#EF9B28] ">
@@ -37,7 +43,7 @@ InputFieldProps<T>) {
             // onChange={onChange}
             placeholder={placeholder}
             {...register(inputName)}
-            className=" relative border-0 text-[#EF9B28] placeholder-white border-gray-500 bg-transparent  focus:outline-none focus:border-blue-500
+            className=" relative border-0 font-normal text-sm  text-[#EF9B28] placeholder:letter-spacing-[1%] placeholder:text-md placeholder:font-normal  placeholder-white border-gray-500 bg-transparent  focus:outline-none focus:border-blue-500
              transition-colors duration-200 "
           />
           {type === "password" && (
