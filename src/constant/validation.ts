@@ -4,7 +4,11 @@ export const VALIDATIONS = {
     invalid: "Email is not valid",
     regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
   },
-
+  seed: {
+    required: "Seed is required",
+    invalid: "Seed must be 4 digits",
+    regex: /^\d{4}$/,
+  },
   password: {
     required: "Password is required",
     invalid: "Password must contain uppercase, lowercase and number",

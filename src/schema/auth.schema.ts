@@ -37,3 +37,31 @@ export const registerSchema = z
     message: "Passwords do not match",
     path: ["confirmPassword"],
   });
+  
+  export const forgetPasswordSchema = z.object({
+  email: z
+      .string()
+      .min(1, VALIDATIONS.email.required)
+      .regex(VALIDATIONS.email.regex, VALIDATIONS.email.invalid),
+});
+
+export const resetPasswordSchema = z
+  .object({
+    email: z
+      .string()
+      .min(1, VALIDATIONS.email.required)
+      .regex(VALIDATIONS.email.regex, VALIDATIONS.email.invalid),
+    seed: z
+      .string()
+      .min(1, VALIDATIONS.seed.required)
+      .length(4, VALIDATIONS.seed.invalid),
+    newPassword: z
+      .string()
+      .min(1, VALIDATIONS.password.required)
+      .regex(VALIDATIONS.password.regex, VALIDATIONS.password.invalid),
+    confirmPassword: z.string().min(1, VALIDATIONS.confirmPassword.required),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
