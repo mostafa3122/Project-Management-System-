@@ -2,7 +2,7 @@ import InputField from "../../../shared/InputField/InputField";
 import AuthHeader from "../../../shared/AuthHeader/AuthHeader";
 import { AxiosError } from "axios";
 import bgForget from "../../../assets/PMS3.png";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type z from "zod";
 import { useForm } from "react-hook-form";
@@ -77,6 +77,20 @@ export default function Login() {
                   />
                 );
               })}
+              <div className="flex justify-between mt-4">
+                <Link
+                  to="/register"
+                  className="text-sm text-gray-300 hover:text-gray-400 transition-colors"
+                >
+                  Register Now ?
+                </Link>
+                <Link
+                  to="/forget-password"
+                  className="text-sm text-gray-300 hover:text-gray-400 transition-colors"
+                >
+                  Forget Password ?
+                </Link>
+              </div>
 
               <div className="text-center text-white mt-6">
                 <button className="w-full cursor-pointer mx-auto bg-[#EF9B28] rounded-[96px] py-3 transition-colors hover:bg-orange-600">
