@@ -14,9 +14,9 @@ export const VALIDATIONS = {
     invalid: "Password must contain uppercase, lowercase and number",
     regex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/,
   },
-confirmPassword:{
-     required: "Password is required",
-},
+  confirmPassword: {
+    required: "Password is required",
+  },
   username: {
     required: "Username is required",
     min: "Minimum 3 characters",
@@ -35,5 +35,10 @@ confirmPassword:{
     required: "Phone number is required",
     invalid: "Enter valid Egyptian phone number",
     regex: /^01[0125][0-9]{8}$/,
+  },
+  code: {
+    required: "code is required",
+    invalid: "code must be 4 digits",
+    regex: /^\d{4}$/,
   },
 };

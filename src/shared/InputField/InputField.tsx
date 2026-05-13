@@ -1,6 +1,6 @@
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
-import type { FieldValues, Path, UseFormRegister } from "react-hook-form";
+import type {  FieldValues, Path, UseFormRegister } from "react-hook-form";
 type InputFieldProps<T extends FieldValues> = {
   label: string;
   inputName: Path<T>;
@@ -8,7 +8,7 @@ type InputFieldProps<T extends FieldValues> = {
   placeholder: string;
   value?: string;
   register: UseFormRegister<T>;
-  error?: string;
+  error?: string ;
   fullWidth?: boolean;
   containerClassName?: string;
 };
@@ -21,14 +21,15 @@ export default function InputField<T extends FieldValues>({
   placeholder,
   fullWidth,
   containerClassName,
-}: //   value,
-//   onChange,
+}: 
 InputFieldProps<T>) {
   const [showPassword, setShowPassword] = useState(false);
   return (
     <>
       <div
-        className={`${fullWidth ? "w-full" : "w-full md:w-[calc(50%-18px)]"}  custom-input mb-3 ${containerClassName || ""} `}
+        className={`${
+          fullWidth ? "w-full" : "w-full md:w-[calc(50%-18px)]"
+        }  custom-input mb-3 ${containerClassName || ""} `}
       >
         <div className="border-b-2 border-gray-400 py-2 flex flex-col gap-0.5 relative">
           {/* lable */}
@@ -56,6 +57,7 @@ InputFieldProps<T>) {
           )}
         </div>
         {/* error */}
+        
         {error && (
           <p className="bg-red-200 rounded py-2 px-3 text-red-500 text-sm mt-1">
             {error}
