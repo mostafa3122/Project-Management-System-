@@ -100,11 +100,7 @@ export const changePasswordSchema = z
       .regex(VALIDATIONS.password.regex, VALIDATIONS.password.invalid),
     confirmPassword: z.string().min(1, VALIDATIONS.confirmPassword.required),
   })
-<<<<<<< HEAD
-  
-=======
   .refine((data) => data.newPassword === data.confirmPassword, {
     message: "Passwords do not match",
     path: ["confirmPassword"],
   });
->>>>>>> 534b5fa (implement forget and reset password pages with reusable InputField)
