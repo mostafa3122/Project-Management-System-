@@ -1,10 +1,12 @@
-import { jwtDecode } from "jwt-decode";
 import { createContext, useEffect, useState } from "react";
+// Import your axios client
+import axiosClient from "../services/api/axiosClient"; 
 
 interface UserData {
-  id: string;
-  email: string;
-  
+  id?: string;
+  userName?: string;
+  email?: string;
+  profileImage?: string;
 }
 
 interface UserContextType {
@@ -19,22 +21,29 @@ export default function UserContextProvider({ children }: { children: React.Reac
   const [userToken, setUserToken] = useState<string | null>(null);
   const [userData, setUserData] = useState<UserData | null>(null);
 
- 
+  
+  const getCurrentUser = async () => {
+    try {
+      const response = await axiosClient.get("/Users/currentUser"); 
+      setUserData(response.data); 
+    } catch (error) {
+      console.error("Failed to fetch user data:", error);
+    }
+  };
+
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       setUserToken(token);
-      const decoded = jwtDecode<UserData>(token);
-      setUserData(decoded);
     }
   }, []); 
 
   
   useEffect(() => {
     if (userToken) {
-      const decoded = jwtDecode<UserData>(userToken);
-      setUserData(decoded);
       localStorage.setItem("token", userToken);
+      getCurrentUser(); 
     } else {
       setUserData(null);
       localStorage.removeItem("token");

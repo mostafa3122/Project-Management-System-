@@ -7,6 +7,7 @@ import ResetPassword from "../pages/Auth/ResetPassword/ResetPassword";
 import VerifyAccount from "../pages/Auth/VerifyAccount/VerifyAccount";
 import NotFound from "../pages/NotFound";
 import WelcomeComponent from "../pages/WelcomeComponent/WelcomeComponent";
+import Navbar from "../shared/Navbar/Navbar";
 // import ProtectedRoute from "./ProtectedRoutes";
 
 const routes = createBrowserRouter([
@@ -42,6 +43,10 @@ const routes = createBrowserRouter([
   {
     path: "reset-password",
     element: <ResetPassword />,
+  },
+  {
+    path: "navbar",
+    element: <Navbar />,
   },
 ]);
 // const routes = createBrowserRouter([
