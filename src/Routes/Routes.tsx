@@ -5,8 +5,8 @@ import Login from "../pages/Auth/Login/Login";
 import Register from "../pages/Auth/Register/Register";
 import ResetPassword from "../pages/Auth/ResetPassword/ResetPassword";
 import VerifyAccount from "../pages/Auth/VerifyAccount/VerifyAccount";
-import NotFound from "../pages/NotFound";
 import WelcomeComponent from "../pages/WelcomeComponent/WelcomeComponent";
+import NotFound from "../shared/NotFound/NotFound";
 // import ProtectedRoute from "./ProtectedRoutes";
 
 const routes = createBrowserRouter([

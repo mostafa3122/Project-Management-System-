@@ -31,7 +31,6 @@ export default function Login() {
         password: data.password,
       });
 
-      console.log("Success Response:", response);
       const token = response.data.token;
 
       if (token) {
