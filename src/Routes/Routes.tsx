@@ -13,12 +13,12 @@ import Navbar from "../shared/Navbar/Navbar";
 const routes = createBrowserRouter([
   {
     path: "/",
-    element: <WelcomeComponent />,
+    element: <Login />,
     errorElement: <NotFound />,
   },
   {
     index: true,
-    element: <WelcomeComponent />,
+    element: <Login />,
   },
   {
     path: "login",
