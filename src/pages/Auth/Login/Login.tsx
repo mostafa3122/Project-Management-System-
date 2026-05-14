@@ -1,5 +1,4 @@
 import InputField from "../../../shared/InputField/InputField";
-import AuthHeader from "../../../shared/AuthHeader/AuthHeader";
 import { AxiosError } from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -36,7 +35,7 @@ export default function Login() {
         setUserToken(token);
       }
       toast.success(response.data.message || "Login successfully!");
-      navigate("/");
+      navigate("/welcome");
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
         toast.error(error.response?.data?.message || "Something went wrong");
@@ -48,7 +47,6 @@ export default function Login() {
 
   return (
     <>
-      {/* <AuthHeader title="Login" /> */}
       <form onSubmit={handleSubmit(onSubmit)}>
         {loginInputs.map((input) => (
           <InputField

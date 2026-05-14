@@ -171,15 +171,34 @@ export default function Register() {
     STEP_FIELDS[groupIdx].every((f) => isFieldDone(f));
 
   // Derive currentStep from field completion — step = number of completed groups + 1
-  useEffect(() => {
-    let completedGroups = 0;
-    for (let i = 0; i < STEP_FIELDS.length; i++) {
-      if (isGroupComplete(i)) completedGroups = i + 1;
-      else break; // stop at the first incomplete group
-    }
-    setCurrentStep(Math.min(completedGroups + 1, STEPS.length));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [JSON.stringify(watchedValues), JSON.stringify(errors)]);
+  // useEffect(() => {
+  //   let completedGroups = 0;
+  //   for (let i = 0; i < STEP_FIELDS.length; i++) {
+  //     if (isGroupComplete(i)) completedGroups = i + 1;
+  //     else break; // stop at the first incomplete group
+  //   }
+  //   setCurrentStep(Math.min(completedGroups + 1, STEPS.length));
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [JSON.stringify(watchedValues), JSON.stringify(errors)]);
+  
+const watchedFields = watch([
+  "userName",
+  "email",
+  "country",
+  "phoneNumber",
+  "password",
+  "confirmPassword",
+]);
+useEffect(() => {
+  let completedGroups = 0;
+
+  for (let i = 0; i < STEP_FIELDS.length; i++) {
+    if (isGroupComplete(i)) completedGroups = i + 1;
+    else break;
+  }
+
+  setCurrentStep(Math.min(completedGroups + 1, STEPS.length));
+}, [watchedFields]);
 
   const onSubmit = async (data: RegisterFormData) => {
     try {
@@ -205,7 +224,7 @@ export default function Register() {
   };
 
   return (
-    <div className="h-screen register-bg flex justify-center items-center">
+    <div className="h-fit register-bg flex justify-center items-center">
       <div className="w-11/12 md:w-3/4 flex flex-col items-center">
 
         {/* Logo */}

@@ -21,7 +21,7 @@ export default function WelcomeComponent() {
  const timer=setTimeout(()=>{
     navigate('/dashboard')
 
-  },3000)
+  },5000)
   return ()=> clearTimeout(timer)
 
   },[navigate]);
@@ -73,9 +73,9 @@ export default function WelcomeComponent() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="text-white text-3xl sm:text-4xl md:text-5xl font-black tracking-[0.2em]"
+          className="text-white/90 text-2xl sm:text-4xl md:text-5xl font-black tracking-[0.2em]"
         >
-          PMS
+        WELCOME TO PMS
         </motion.h1>
 
         <motion.p

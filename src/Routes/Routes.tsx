@@ -7,8 +7,10 @@ import ResetPassword from "../pages/Auth/ResetPassword/ResetPassword";
 import VerifyAccount from "../pages/Auth/VerifyAccount/VerifyAccount";
 import WelcomeComponent from "../pages/WelcomeComponent/WelcomeComponent";
 import NotFound from "../shared/NotFound/NotFound";
-import Navbar from "../shared/Navbar/Navbar";
 import AuthLayout from "../shared/layouts/AuthLayout/AuthLayout";
+import MasterLayout from "../shared/layouts/MasterLayout/MasterLayout";
+import Dashboard from "../pages/Dashboard/Dashboard";
+import ProtectedRoute from "./ProtectedRoutes";
 // import ProtectedRoute from "./ProtectedRoutes";
 
 // const routes = createBrowserRouter([
@@ -51,47 +53,59 @@ import AuthLayout from "../shared/layouts/AuthLayout/AuthLayout";
 //   },
 // ]);
 const routes = createBrowserRouter([
-    {
-        path: "/",
-        element: <AuthLayout />,
-        errorElement: <NotFound />,
-        children: [
-            {
-                index: true,
-                element: <Login/>
-            },
-            {
-               path:'login',
-               element:<Login/>
-            },
-            {
-                path :'verify-account',
-                element : <VerifyAccount/>
-            },
-            {
-                path :'forget-password',
-                element : <ForgetPassword/>
-            },
-            {
-                path :'reset-password',
-                element : <ResetPassword/>
-            },
-            {
-                path: "change-password",
-                element: <ChangePassword />,
-            },
-            {
-                path: "navbar",
-                element: <Navbar />,
-            },
-        ]
-    },
-    {
-      path:'register',
-      element:<Register/>
-    },
+  {
+    path: "/",
+    element: <AuthLayout />,
+    errorElement: <NotFound />,
+    children: [
+      {
+        index: true,
+        element: <Login />,
+      },
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "verify-account",
+        element: <VerifyAccount />,
+      },
+      {
+        path: "forget-password",
+        element: <ForgetPassword />,
+      },
+      {
+        path: "reset-password",
+        element: <ResetPassword />,
+      },
+      {
+        path: "change-password",
+        element: <ChangePassword />,
+      },
+    ],
+  },
+  {
+    path: "register",
+    element: <Register />,
+  },
+  {
+    path: "",
+    element: (
+      <ProtectedRoute>
+        <MasterLayout />
+      </ProtectedRoute>
+    ),
+    errorElement: <NotFound />,
+    children: [
+      { index: true, element: <Dashboard /> },
+      { path: "dashboard", element: <Dashboard /> },
 
-])
+    ],
+
+  },
+       { path: "welcome", element: <WelcomeComponent /> },
+
+]);
 
 const Routes = () => {
   return (
