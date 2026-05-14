@@ -6,7 +6,7 @@ interface UserData {
   id?: string;
   userName?: string;
   email?: string;
-  profileImage?: string;
+  imagePath?: string;
 }
 
 interface UserContextType {
