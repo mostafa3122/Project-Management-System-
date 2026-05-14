@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import type { Bubble } from "../../interfaces/bubble.interface";
 
 const bubbles: Bubble[] = Array.from(
@@ -16,9 +17,17 @@ const bubbles: Bubble[] = Array.from(
 
 export default function WelcomeComponent() {
   const navigate = useNavigate();
+  useEffect(()=>{
+ const timer=setTimeout(()=>{
+    navigate('/dashboard')
 
+  },3000)
+  return ()=> clearTimeout(timer)
+
+  },[navigate]);
+ 
   return (
-    <div className="landing relative min-h-screen overflow-hidden flex items-center justify-center px-4 sm:px-6">
+    <div className="landing relative min-h-screen overflow-hidden flex items-center justify-center px-4 sm:px-6 ">
       <div className="absolute inset-0 overflow-hidden z-0">
         {bubbles.map((bubble) => (
           <motion.div
@@ -78,30 +87,9 @@ export default function WelcomeComponent() {
           Project Management System
         </motion.p>
 
-        <motion.button
-          onClick={() => navigate("/login")}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="
-        px-12
-        py-4
-        h-14 
-           w-60
-        bg-[#F5A623]
-        text-[#07140f]
-        rounded-md
-        font-bold
-        shadow-md
-         cursor-pointer
-        flex items-center justify-center
-      "
-        >
-          Get Started
-        </motion.button>
+      
       </div>
+      
     </div>
   );
 }
