@@ -22,8 +22,8 @@ export const changeInputs: {
     placeholder: "Enter you New Password",
   },
   {
-    name: "confirmPassword",
-    label: "Confirm Password",
+    name: "confirmNewPassword",
+    label: "Confirm New  Password",
     type: "password",
     placeholder: "Confirm New Password",
   },

@@ -7,77 +7,91 @@ import ResetPassword from "../pages/Auth/ResetPassword/ResetPassword";
 import VerifyAccount from "../pages/Auth/VerifyAccount/VerifyAccount";
 import WelcomeComponent from "../pages/WelcomeComponent/WelcomeComponent";
 import NotFound from "../shared/NotFound/NotFound";
+import Navbar from "../shared/Navbar/Navbar";
+import AuthLayout from "../shared/layouts/AuthLayout/AuthLayout";
 // import ProtectedRoute from "./ProtectedRoutes";
 
-const routes = createBrowserRouter([
-  {
-    path: "/",
-    element: <WelcomeComponent />,
-    errorElement: <NotFound />,
-  },
-  {
-    index: true,
-    element: <WelcomeComponent />,
-  },
-  {
-    path: "login",
-    element: <Login />,
-  },
-  {
-    path: "register",
-    element: <Register />,
-  },
-  {
-    path: "verify-account",
-    element: <VerifyAccount />,
-  },
-  {
-    path: "forget-password",
-    element: <ForgetPassword />,
-  },
-  {
-    path: "change-password",
-    element: <ChangePassword />,
-  },
-  {
-    path: "reset-password",
-    element: <ResetPassword />,
-  },
-]);
 // const routes = createBrowserRouter([
-//     {
-//         path: "/",
-//         element: <WelcomeComponent />,
-//         errorElement: <NotFound />,
-//         children: [
-//             {
-//                 index: true,
-//                 element: <WelcomeComponent/>
-//             },
-//             {
-//                path:'login',
-//                element:<Login/>
-//             },
-//             {
-//                path:'register',
-//                element:<Register/>
-//             },
-//             {
-//                 path :'verify-account',
-//                 element : <VerifyAccount/>
-//             },
-//             {
-//                 path :'forget-password',
-//                 element : <ForgetPassword/>
-//             },
-//             {
-//                 path :'reset-password',
-//                 element : <ResetPassword/>
-//             }
-//         ]
-//     }
+//   {
+//     path: "/",
+//     element: <Login />,
+//     errorElement: <NotFound />,
+//   },
+//   {
+//     index: true,
+//     element: <Login />,
+//   },
+//   {
+//     path: "login",
+//     element: <Login />,
+//   },
+//   {
+//     path: "register",
+//     element: <Register />,
+//   },
+//   {
+//     path: "verify-account",
+//     element: <VerifyAccount />,
+//   },
+//   {
+//     path: "forget-password",
+//     element: <ForgetPassword />,
+//   },
+//   {
+//     path: "change-password",
+//     element: <ChangePassword />,
+//   },
+//   {
+//     path: "reset-password",
+//     element: <ResetPassword />,
+//   },
+//   {
+//     path: "navbar",
+//     element: <Navbar />,
+//   },
+// ]);
+const routes = createBrowserRouter([
+    {
+        path: "/",
+        element: <AuthLayout />,
+        errorElement: <NotFound />,
+        children: [
+            {
+                index: true,
+                element: <Login/>
+            },
+            {
+               path:'login',
+               element:<Login/>
+            },
+            {
+                path :'verify-account',
+                element : <VerifyAccount/>
+            },
+            {
+                path :'forget-password',
+                element : <ForgetPassword/>
+            },
+            {
+                path :'reset-password',
+                element : <ResetPassword/>
+            },
+            {
+                path: "change-password",
+                element: <ChangePassword />,
+            },
+            {
+                path: "navbar",
+                element: <Navbar />,
+            },
+        ]
+    },
+    {
+      path:'register',
+      element:<Register/>
+    },
 
-// ])
+])
 
 const Routes = () => {
   return (

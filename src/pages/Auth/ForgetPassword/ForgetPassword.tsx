@@ -1,5 +1,4 @@
 import AuthHeader from "../../../shared/AuthHeader/AuthHeader";
-import bgForget from "../../../assets/PMS3.png";
 import InputField from "../../../shared/InputField/InputField";
 import type z from "zod";
 import { useForm } from "react-hook-form";
@@ -10,14 +9,14 @@ import { useNavigate } from "react-router-dom";
 import { forgetPasswordSchema } from "../../../schema/auth.schema";
 
 export default function ForgetPassword() {
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<z.infer<typeof forgetPasswordSchema>>({
-    resolver: zodResolver(forgetPasswordSchema), // to validate schema
+    resolver: zodResolver(forgetPasswordSchema),
   });
 
   const onSubmit = async (data: z.infer<typeof forgetPasswordSchema>) => {
@@ -26,7 +25,7 @@ export default function ForgetPassword() {
         email: data.email,
       });
       toast.success(response.data.message || "OTP sent to your email!");
-      Navigate("/reset-password");
+      navigate("/reset-password");
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Something went wrong");
     }
@@ -34,33 +33,24 @@ export default function ForgetPassword() {
 
   return (
     <>
-      <div className="h-screen register-bg flex justify-center items-center">
-        <div className="w-11/12 md:w-1/2 lg:w-5/12 flex flex-col items-center ">
-          <div className="auth-logo mb-5">
-            <img src={bgForget} alt="PMS logo" className="w-32 md:w-48" />
-          </div>
-          <div className="form w-full p-6 sm:p-8 md:px-20 md:py-10 bg-[#315951E5] rounded-2xl">
-            <AuthHeader title={"Forget Password"} />
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <InputField 
-                label="E-mail"
-                inputName="email"
-                type="email"
-                register={register}
-                error={errors.email?.message}
-                placeholder="Enter your E-mail"
-                fullWidth={true}
-                containerClassName="py-3 md:py-6"
-              />
-              <div className="text-center text-white mt-10">
-                <button className="w-full cursor-pointer mx-auto bg-[#EF9B28] rounded-[96px] py-3 transition-colors hover:bg-orange-600">
-                  {isSubmitting ? "Verifying..." : "Verify"}
-                </button>
-              </div>
-            </form>
-          </div>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <InputField
+          label="E-mail"
+          inputName="email"
+          type="email"
+          register={register}
+          error={errors.email?.message}
+          placeholder="Enter your E-mail"
+          fullWidth={true}
+          containerClassName="py-3 md:py-6"
+        />
+
+        <div className="text-center text-white mt-10">
+          <button className="w-full cursor-pointer bg-[#EF9B28] rounded-[96px] py-3 transition-colors hover:bg-orange-600">
+            {isSubmitting ? "Verifying..." : "Verify"}
+          </button>
         </div>
-      </div>
+      </form>
     </>
   );
 }
