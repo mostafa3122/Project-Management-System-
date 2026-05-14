@@ -25,7 +25,7 @@ export default function ChangePassword() {
       const response = await axiosClient.put("/Users/ChangePassword", {
         oldPassword: data.oldPassword,
         newPassword: data.newPassword,
-        confirmPassword: data.confirmPassword,
+        confirmNewPassword: data.confirmNewPassword,
       });
       toast.success(response.data.message || "Password changed successfully!");
       navigate("/login");
