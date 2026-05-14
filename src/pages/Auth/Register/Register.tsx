@@ -125,7 +125,7 @@ function PasswordGeneratorPanel({ onUse, onClose }: { onUse: (p: string) => void
       </div>
       <div className="mb-3.5">
         <div className="flex justify-between text-[13px] mb-1.5 text-white/75"><span>Length</span><span className="font-semibold text-[#EF9B28]">{length}</span></div>
-        <input type="range" min={4} max={32} value={length} onChange={(e) => setLength(+e.target.value)} className="w-full accent-[#EF9B28]" />
+        <input type="range" min={8} max={32} value={length} onChange={(e) => setLength(+e.target.value)} className="w-full accent-[#EF9B28]" />
       </div>
       {[
         { label: "Uppercase (A–Z)", value: upper,   set: setUpper   },
