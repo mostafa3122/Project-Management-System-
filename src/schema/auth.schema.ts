@@ -98,9 +98,9 @@ export const changePasswordSchema = z
       .string()
       .min(1, VALIDATIONS.password.required)
       .regex(VALIDATIONS.password.regex, VALIDATIONS.password.invalid),
-    confirmPassword: z.string().min(1, VALIDATIONS.confirmPassword.required),
+    confirmNewPassword: z.string().min(1, VALIDATIONS.confirmPassword.required),
   })
-  .refine((data) => data.newPassword === data.confirmPassword, {
+  .refine((data) => data.newPassword === data.confirmNewPassword, {
     message: "Passwords do not match",
     path: ["confirmPassword"],
   });
