@@ -57,9 +57,9 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
          
           <div className="relative -mt-16 mb-3">
             <div className="h-24 w-24 rounded-full border-[6px] border-[#0E382F] bg-[#EF9B28] flex items-center justify-center overflow-hidden shadow-lg">
-              {userData?.imagePath || user?.profileImage ? (
+              {userData?.imagePath ? (
                 <img 
-                  src={userData?.imagePath || user?.profileImage || userImg} 
+                    src={userData?.imagePath?`https://upskilling-egypt.com:3003/${userData.imagePath}`: user}
                   alt="User Avatar" 
                   className="h-full w-full object-cover"
                 />

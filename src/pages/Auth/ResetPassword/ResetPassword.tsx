@@ -1,14 +1,13 @@
 import InputField from "../../../shared/InputField/InputField";
-import AuthHeader from "../../../shared/AuthHeader/AuthHeader";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type z from "zod";
 import { useForm } from "react-hook-form";
 import { resetPasswordSchema } from "../../../schema/auth.schema";
-import axiosClient from "../../../services/api/axiosClient";
 import { toast } from "react-toastify";
 import { resetInputs } from "./reset.inputs";
 import AuthButton from "../../../components/AuthButton";
+import { ResetApi } from "../../../services/api/auth";
 
 export default function ResetPassword() {
   const navigate = useNavigate();
@@ -23,7 +22,7 @@ export default function ResetPassword() {
 
   const onSubmit = async (data: z.infer<typeof resetPasswordSchema>) => {
     try {
-      const response = await axiosClient.post("/Users/Reset", {
+      const response = await ResetApi({
         email: data.email,
         seed: data.seed,
         password: data.newPassword,
