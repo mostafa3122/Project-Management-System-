@@ -5,12 +5,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import type z from "zod";
 import { useForm } from "react-hook-form";
 import { loginSchema } from "../../../schema/auth.schema";
-import axiosClient from "../../../services/api/axiosClient";
 import { toast } from "react-toastify";
 import { loginInputs } from "./login.inputs";
 import { useContext } from "react";
 import { userContext } from "../../../context/userContext";
 import AuthButton from "../../../components/AuthButton";
+import { LoginApi } from "../../../services/api/auth";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ export default function Login() {
 
   const onSubmit = async (data: z.infer<typeof loginSchema>) => {
     try {
-      const response = await axiosClient.post("/Users/Login", {
+      const response = await LoginApi({
         email: data.email,
         password: data.password,
       });

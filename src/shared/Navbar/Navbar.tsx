@@ -53,7 +53,7 @@ export default function Navbar() {
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
           >
             <img
-              src={userData?.imagePath || user}
+              src={userData?.imagePath?`https://upskilling-egypt.com:3003/${userData.imagePath}`: user}
               alt="User Avatar"
               className="h-10 w-10 rounded-full object-cover border border-gray-200"
             />
