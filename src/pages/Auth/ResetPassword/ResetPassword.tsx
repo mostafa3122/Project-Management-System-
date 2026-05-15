@@ -8,6 +8,7 @@ import { resetPasswordSchema } from "../../../schema/auth.schema";
 import axiosClient from "../../../services/api/axiosClient";
 import { toast } from "react-toastify";
 import { resetInputs } from "./reset.inputs";
+import AuthButton from "../../../components/AuthButton";
 
 export default function ResetPassword() {
   const navigate = useNavigate();
@@ -52,9 +53,7 @@ export default function ResetPassword() {
         ))}
 
         <div className="text-center text-white mt-6">
-          <button className="w-full cursor-pointer bg-[#EF9B28] rounded-[96px] py-3 transition-colors hover:bg-orange-600">
-            {isSubmitting ? "Saving..." : "Save"}
-          </button>
+          <AuthButton isSubmitting={isSubmitting} label="Save" />
         </div>
       </form>
     </>

@@ -8,6 +8,7 @@ import { VerifyApi } from "../../../services/api/auth";
 import AuthHeader from "../../../shared/AuthHeader/AuthHeader";
 import InputField from "../../../shared/InputField/InputField";
 import { VerifyInputs } from "./verify.inputs";
+import AuthButton from "../../../components/AuthButton";
 
 export default function VerifyAccount() {
   const navigate = useNavigate();
@@ -47,9 +48,7 @@ export default function VerifyAccount() {
         ))}
 
         <div className="text-center text-white mt-6">
-          <button className="w-full cursor-pointer bg-[#EF9B28] rounded-[96px] py-3 transition-colors hover:bg-orange-600">
-            {isSubmitting ? "Saving..." : "Save"}
-          </button>
+        <AuthButton isSubmitting={isSubmitting} label="Save" />
         </div>
       </form>
     </>

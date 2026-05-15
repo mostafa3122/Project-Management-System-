@@ -11,6 +11,7 @@ import { z } from "zod";
 import { registerSchema } from "../../../schema/auth.schema";
 import { RegisterApi } from "../../../services/api/auth";
 import { useState, useEffect } from "react";
+import AuthButton from "../../../components/AuthButton";
 
 type RegisterFormData = z.infer<typeof registerSchema>;
 
@@ -280,13 +281,8 @@ useEffect(() => {
             </div>
 
             {/* Submit */}
-            <div className="text-center text-white">
-              <button
-                type="submit"
-                className="w-1/2 cursor-pointer bg-[#EF9B28] rounded-[96px] py-3 font-semibold hover:bg-[#d98820] active:scale-[0.98] transition-all duration-200"
-              >
-                {isSubmitting ? "Saving..." : "Save"}
-              </button>
+            <div className="text-center text-white w-1/2 mx-auto">
+              <AuthButton isSubmitting={isSubmitting} label="Save"  /> 
             </div>
 
           </form>

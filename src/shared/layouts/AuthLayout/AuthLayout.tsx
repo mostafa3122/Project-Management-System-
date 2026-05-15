@@ -12,7 +12,6 @@ const pageTitles: Record<string, string> = {
   "/change-password": "Change Password",
 };
 
-// Background classes for each auth page
 const pageBackgrounds: Record<string, string> = {
   "/login": "login-bg",
   "/verify-account": "verify-bg",
@@ -86,7 +85,7 @@ export default function AuthLayout() {
       className={`h-screen ${getBackgroundClass(pathname)} flex justify-center items-center`}
     >
       <div className="w-11/12 md:w-1/2 lg:w-5/12 flex flex-col items-center">
-        {/* Logo */}
+      
         <motion.div
           className="auth-logo mb-5"
           variants={logoVariants}
@@ -96,7 +95,6 @@ export default function AuthLayout() {
           <img src={authLogo} alt="PMS logo" className="w-32 md:w-48" />
         </motion.div>
 
-        {/* Card */}
         <motion.div
           className="w-full p-6 sm:p-8 md:px-20 md:py-10 bg-[#315951E5] rounded-2xl"
           variants={cardVariants}
