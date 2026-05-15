@@ -1,4 +1,4 @@
-import AuthHeader from "../../../shared/AuthHeader/AuthHeader";
+
 import InputField from "../../../shared/InputField/InputField";
 import type z from "zod";
 import { useForm } from "react-hook-form";
@@ -8,6 +8,7 @@ import axiosClient from "../../../services/api/axiosClient";
 import { useNavigate } from "react-router-dom";
 import { changePasswordSchema } from "../../../schema/auth.schema";
 import { changeInputs } from "./change.inputs.ts";
+import AuthButton from "../../../components/AuthButton.tsx";
 
 export default function ChangePassword() {
   const navigate = useNavigate();
@@ -52,9 +53,7 @@ export default function ChangePassword() {
         ))}
 
         <div className="text-center text-white mt-10">
-          <button className="w-full cursor-pointer bg-[#EF9B28] rounded-[96px] py-3 transition-colors hover:bg-orange-600">
-            {isSubmitting ? "Verifying..." : "Verify"}
-          </button>
+          <AuthButton isSubmitting={isSubmitting} label="Verify" /> 
         </div>
       </form>
     </>

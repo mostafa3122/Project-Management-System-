@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { loginInputs } from "./login.inputs";
 import { useContext } from "react";
 import { userContext } from "../../../context/userContext";
+import AuthButton from "../../../components/AuthButton";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -71,9 +72,7 @@ export default function Login() {
         </div>
 
         <div className="text-center text-white mt-6">
-          <button className="w-full cursor-pointer bg-[#EF9B28] rounded-[96px] py-3 transition-colors hover:bg-orange-600">
-            {isSubmitting ? "Logging in..." : "Login"}
-          </button>
+          <AuthButton isSubmitting={isSubmitting} label="Login" />
         </div>
       </form>
     </>

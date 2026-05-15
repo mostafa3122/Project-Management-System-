@@ -1,4 +1,4 @@
-import AuthHeader from "../../../shared/AuthHeader/AuthHeader";
+
 import InputField from "../../../shared/InputField/InputField";
 import type z from "zod";
 import { useForm } from "react-hook-form";
@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import axiosClient from "../../../services/api/axiosClient";
 import { useNavigate } from "react-router-dom";
 import { forgetPasswordSchema } from "../../../schema/auth.schema";
+import AuthButton from "../../../components/AuthButton";
 
 export default function ForgetPassword() {
   const navigate = useNavigate();
@@ -46,9 +47,7 @@ export default function ForgetPassword() {
         />
 
         <div className="text-center text-white mt-10">
-          <button className="w-full cursor-pointer bg-[#EF9B28] rounded-[96px] py-3 transition-colors hover:bg-orange-600">
-            {isSubmitting ? "Verifying..." : "Verify"}
-          </button>
+          <AuthButton isSubmitting={isSubmitting} label="Verify" />
         </div>
       </form>
     </>
