@@ -11,6 +11,9 @@ import AuthLayout from "../shared/layouts/AuthLayout/AuthLayout";
 import MasterLayout from "../shared/layouts/MasterLayout/MasterLayout";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import ProtectedRoute from "./ProtectedRoutes";
+import Users from "../pages/Users/Users";
+import Projects from "../pages/Projects/Projects";
+import Tasks from "../pages/Tasks/Tasks";
 // import ProtectedRoute from "./ProtectedRoutes";
 
 // const routes = createBrowserRouter([
@@ -89,7 +92,7 @@ const routes = createBrowserRouter([
     element: <Register />,
   },
   {
-    path: "",
+    path: "/dashboard",
     element: (
       <ProtectedRoute>
         <MasterLayout />
@@ -98,13 +101,13 @@ const routes = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       { index: true, element: <Dashboard /> },
-      { path: "dashboard", element: <Dashboard /> },
-
+      { path: "", element: <Dashboard /> },
+      { path: "users", element: <Users /> },
+      { path: "projects", element: <Projects /> },
+      { path: "tasks", element: <Tasks /> },
     ],
-
   },
-       { path: "welcome", element: <WelcomeComponent /> },
-
+  { path: "welcome", element: <WelcomeComponent /> },
 ]);
 
 const Routes = () => {

@@ -49,3 +49,10 @@ body {
   background-position: center;
   background-repeat: no-repeat;
 }
+
+.dashboard-bg {
+  background-image: url(./assets/dashboard.jpg);
+  background-size: cover;
+  background-position: 100% 41%;
+  background-repeat: no-repeat;
+}
