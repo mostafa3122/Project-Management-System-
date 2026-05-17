@@ -1,16 +1,16 @@
-import InputField from "../../../shared/InputField/InputField";
-import { AxiosError } from "axios";
-import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type z from "zod";
-import { useForm } from "react-hook-form";
-import { loginSchema } from "../../../schema/auth.schema";
-import { toast } from "react-toastify";
-import { loginInputs } from "./login.inputs";
+import { AxiosError } from "axios";
 import { useContext } from "react";
-import { userContext } from "../../../context/userContext";
+import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import type z from "zod";
 import AuthButton from "../../../components/AuthButton";
+import { userContext } from "../../../context/userContext";
+import { loginSchema } from "../../../schema/auth.schema";
 import { LoginApi } from "../../../services/api/auth";
+import InputField from "../../../shared/InputField/InputField";
+import { loginInputs } from "./login.inputs";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -63,10 +63,16 @@ export default function Login() {
         ))}
 
         <div className="flex justify-between mt-4">
-          <Link to="/register" className="text-sm text-gray-300 hover:text-gray-400 transition-colors">
+          <Link
+            to="/register"
+            className="text-sm text-gray-300 hover:text-gray-400 transition-colors"
+          >
             Register Now?
           </Link>
-          <Link to="/forget-password" className="text-sm text-gray-300 hover:text-gray-400 transition-colors">
+          <Link
+            to="/forget-password"
+            className="text-sm text-gray-300 hover:text-gray-400 transition-colors"
+          >
             Forget Password?
           </Link>
         </div>
