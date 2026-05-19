@@ -3,9 +3,8 @@ import { useForm } from "react-hook-form";
 import { FiChevronLeft } from "react-icons/fi";
 import { useNavigate, useParams } from "react-router-dom";
 import type { ITask } from "../../../interfaces/task.interface";
-import { fetchEmployeeList, fetchProjectsList } from "../../../services/api/projects";
 import { toast } from "react-toastify";
-import { CreateTask, UpdateTask, GetTaskById } from "../../../services/api/tasks";
+import { CreateTask, UpdateTask, GetTaskById, fetchEmployeeList, fetchProjectsList } from "../../../services/api/tasks";
 
 export default function TaskData() {
   const { id } = useParams();
@@ -49,7 +48,7 @@ export default function TaskData() {
         toast.success("Task created successfully!");
         
       }
-      navigate("/tasks");
+      navigate("/dashboard/tasks");
     } catch (error: any) {
       const errorMsg = error.response?.data?.message || error.message || "Failed to save task.";
       toast.error(errorMsg);
@@ -107,7 +106,7 @@ export default function TaskData() {
       <div className="bg-white p-6">
         <button
           onClick={() => {
-            navigate("/tasks");
+            navigate("/dashboard/tasks");
           }}
           className="inline-flex items-center gap-1.5 text-[#0E382F] hover:text-[#263D37] font-montserrat font-normal  text-sm transition-colors duration-200 group"
         >
@@ -194,8 +193,6 @@ export default function TaskData() {
                 </span>
               )}
             </div>
-
-            
             <div className="flex flex-col relative">
               <label className="text-sm font-semibold text-[#4F4F4F] mb-1.5">
                 Project
@@ -224,7 +221,7 @@ export default function TaskData() {
             <button
               type="button"
               disabled={submitting}
-              onClick={() => navigate("/tasks")}
+              onClick={() => navigate("/dashboard/tasks")}
               className="px-8 py-2 border-[1.5px] border-[#0E382F] rounded-full text-[#0E382F] hover:bg-[#0E382F]/5 transition-colors font-normal text-sm cursor-pointer font-montserrat disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Cancel
