@@ -40,10 +40,11 @@ body {
 .verify-bg {
   background-image: url(./assets/change&verify.jpg);
   background-size: 100% 100%;
-  background-position: center ;
+  background-position: center;
   background-repeat: no-repeat;
 }
-.forget-bg{
+
+.forget-bg {
   background-image: url(./assets/forget-bg.jpg);
   background-size: 100% 100%;
   background-position: center;
@@ -55,4 +56,12 @@ body {
   background-size: cover;
   background-position: 100% 41%;
   background-repeat: no-repeat;
+}
+
+.custom-head tr th {
+  background: #315951E5 !important;
+  color: #fff;
+  padding: 19px 16px;
+  border: #315951E5 solid 1px;
+  font-size: 14px;
 }
