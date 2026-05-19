@@ -6,15 +6,15 @@ import Register from "../pages/Auth/Register/Register";
 import ResetPassword from "../pages/Auth/ResetPassword/ResetPassword";
 import VerifyAccount from "../pages/Auth/VerifyAccount/VerifyAccount";
 import Dashboard from "../pages/Dashboard/Dashboard";
-import Projects from "../pages/Projects/Projects";
-import Tasks from "../pages/Tasks/Tasks";
-import UsersData from "../pages/Users/UsersData/UsersData";
 import WelcomeComponent from "../pages/WelcomeComponent/WelcomeComponent";
 import AuthLayout from "../shared/layouts/AuthLayout/AuthLayout";
 import MasterLayout from "../shared/layouts/MasterLayout/MasterLayout";
 import NotFound from "../shared/NotFound/NotFound";
 import ProtectedRoute from "./ProtectedRoutes";
 import UserList from "../pages/Users/UsersList/UserList";
+import TaskList from "../pages/Task/TaskList";
+import TaskData from "../pages/Task/TaskData/TaskData";
+import Projects from "../pages/Projects/Projects";
 // import ProtectedRoute from "./ProtectedRoutes";
 
 // const routes = createBrowserRouter([
@@ -105,7 +105,9 @@ const routes = createBrowserRouter([
       { path: "", element: <Dashboard /> },
       { path: "users", element: <UserList /> },
       { path: "projects", element: <Projects /> },
-      { path: "tasks", element: <Tasks /> },
+      { path: "tasks", element: <TaskList /> },
+      { path: "tasks/new", element: <TaskData /> },
+      { path: "tasks/edit/:id", element: <TaskData /> },
     ],
   },
   { path: "welcome", element: <WelcomeComponent /> },
