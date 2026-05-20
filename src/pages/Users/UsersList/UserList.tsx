@@ -23,6 +23,7 @@ import ConfirmationModal from "../../Projects/DeleteConfirmationModal/DeleteConf
 export default function UserList() {
   const [usersList, setUsersList] = useState<UserType[]>([]);
   const [loading, setLoading] = useState(true);
+  const [toggleLoading, setToggleLoading] = useState(false);
   // user data modal
   const [openModal, setOpenModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -33,23 +34,33 @@ export default function UserList() {
   // filter  & search
   const [statusFilter, setStatusFilter] = useState("all");
   const [searchInput, setSearchInput] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+
   const filteredUsers = usersList.filter((user) => {
     const matchStatus =
       statusFilter === "active"
         ? user.isActivated === true
         : statusFilter === "inactive"
-        ? user.isActivated === false
-        : true;
-
-    const matchSearch = user.userName
-      .toLowerCase()
-      .includes(searchInput.toLowerCase());
-    return matchStatus && matchSearch;
+          ? user.isActivated === false
+          : true;
+    return matchStatus;
   });
+
   // pagination
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [totalRecords, setTotalRecords] = useState(0);
+
+  // Search Debounce Effect
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchInput);
+    }, 500);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [searchInput]);
 
   // get all users
   const getUsers = async () => {
@@ -58,6 +69,7 @@ export default function UserList() {
       const response = await GetUsersApi({
         pageNumber: pageNumber,
         pageSize: pageSize,
+        userName: debouncedSearch || undefined,
       });
       setUsersList(response.data.data);
       setTotalRecords(response.data.totalNumberOfRecords || 0);
@@ -71,19 +83,30 @@ export default function UserList() {
   // handle block
   const handleToggleStatus = async (id: number) => {
     try {
+      setToggleLoading(true);
       await ToggleStatusApi(id);
+      
+      const user = usersList.find((u: any) => u.id === id);
+      const isCurrentlyActivated = user?.isActivated;
+
       setUsersList((prev: any) =>
         prev.map((user: any) =>
           user.id === id ? { ...user, isActivated: !user.isActivated } : user
         )
       );
-    } catch (error) {
+
+      toast.success(
+        `User ${isCurrentlyActivated ? "blocked" : "unblocked"} successfully!`
+      );
+    } catch (error: any) {
       toast.error(error?.response?.data?.message || "Failed to update status");
+    } finally {
+      setToggleLoading(false);
     }
   };
   useEffect(() => {
     getUsers();
-  }, [pageNumber, pageSize]);
+  }, [pageNumber, pageSize, debouncedSearch]);
   return (
     <div className="bg-white">
       {/* Header */}
@@ -95,9 +118,12 @@ export default function UserList() {
             <div className="search-input relative cursor-pointer w-48">
               <input
                 type="text"
-                placeholder="Search Fleets"
+                placeholder="Search Users"
                 value={searchInput}
-                onChange={(e) => setSearchInput(e.target.value)}
+                onChange={(e) => {
+                  setSearchInput(e.target.value);
+                  setPageNumber(1);
+                }}
                 className="w-full rounded-3xl cursor-pointer text-gray-500 border border-[#26385A40] py-2 pl-10 pr-4 outline-none "
               />
               <Search
@@ -124,48 +150,48 @@ export default function UserList() {
               />
             </div>
           </div>
-          <table className="table custom-table w-full   ">
+          <table className="table custom-table w-full ">
             <thead className="custom-head">
               <tr>
-                <th>
-                  <div className="flex items-center gap-3 text-sm font-normal">
+                <th className="px-6 py-2 font-normal">
+                  <div className="flex items-center gap-3">
                     <span>User Name</span>
                     <ChevronsUpDown size={16} strokeWidth={2} />
                   </div>
                 </th>
-                <th>
-                  <div className="flex items-center gap-3 text-sm font-normal">
+                <th className="px-6 py-2 font-normal">
+                  <div className="flex items-center gap-3">
                     <span>Image</span>
                   </div>
                 </th>
-                <th>
-                  <div className="flex items-center gap-2  text-sm font-normal">
+                <th className="px-6 py-2 font-normal">
+                  <div className="flex items-center gap-2">
                     <span>Status</span>
                     <ChevronsUpDown size={16} strokeWidth={2} />
                   </div>
                 </th>
-                <th>
-                  <div className="flex items-center gap-2  text-sm font-normal">
+                <th className="px-6 py-2 font-normal">
+                  <div className="flex items-center gap-2">
                     <span>Phone Number</span>
                     <ChevronsUpDown size={16} strokeWidth={2} />
                   </div>
                 </th>
-                <th>
-                  <div className="flex items-center gap-2  text-sm font-normal">
+                <th className="px-6 py-2 font-normal">
+                  <div className="flex items-center gap-2">
                     <span>Email</span>
                     <ChevronsUpDown size={16} strokeWidth={2} />
                   </div>
                 </th>
-                <th>
-                  <div className="flex items-center gap-2  text-sm font-normal">
+                <th className="px-6 py-2 font-normal">
+                  <div className="flex items-center gap-2">
                     <span> Date Created</span>
                     <ChevronsUpDown size={16} strokeWidth={2} />
                   </div>
                 </th>
-                <th className=" text-sm font-normal">Actions</th>
+                <th className="px-6 py-2 font-normal text-sm">Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-gray-100 text-sm text-[#4F4F4F] font-normal">
               {loading ? (
                 <tr>
                   <td colSpan={7}>
@@ -387,10 +413,10 @@ export default function UserList() {
       <ConfirmationModal
         variant="block"
         isOpen={confirmOpen}
+        loading={toggleLoading}
         title={selectedUser2?.isActivated ? "Block User" : "Unblock User"}
-        message={`Are you sure you want to ${
-          selectedUser2?.isActivated ? "block" : "unblock"
-        } "${selectedUser2?.userName}"?`}
+        message={`Are you sure you want to ${selectedUser2?.isActivated ? "block" : "unblock"
+          } "${selectedUser2?.userName}"?`}
         confirmLabel={selectedUser2?.isActivated ? "Block" : "Unblock"}
         onClose={() => setConfirmOpen(false)}
         onConfirm={async () => {

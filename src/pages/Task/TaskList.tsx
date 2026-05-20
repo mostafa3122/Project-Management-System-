@@ -209,8 +209,8 @@ export default function TaskList() {
                     <td className="p-4 w-1/6">
                       {task.creationDate
                         ? new Date(task.creationDate).toLocaleDateString(
-                            "en-GB"
-                          )
+                          "en-GB"
+                        )
                         : "N/A"}{" "}
                     </td>
                     <td className="p-4 w-12 relative">
