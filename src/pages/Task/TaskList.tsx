@@ -18,7 +18,10 @@ import Loading from "../../shared/Loading/Loading";
 import NoData from "../../shared/NoData/NoData";
 import Pagination from "../../shared/Pagination/Pagination";
 import StatusBadge from "../../shared/StatusBadge/StatusBadge";
-import TaskDetailsModal from "./components/TaskDetailsModal";
+import TaskDetailsModal from "./components/DetailsModal";
+import SubHeader from "../../shared/SubHeader/SubHeader";
+import ConfirmationModal from "../Projects/DeleteConfirmationModal/DeleteConfirmation";
+import DetailsModal from "./components/DetailsModal";
 
 const formatDate = (dateString?: string) => {
   if (!dateString) return "N/A";
@@ -107,17 +110,12 @@ export default function TaskList() {
 
   return (
     <>
-      <div className="bg-white flex justify-between items-center py-2  font-montserrat">
-        <h1 className="px-6 py-4 text-[#4F4F4F] font-medium text-[28px] ">
-          Tasks
-        </h1>
-        <button
-          onClick={() => navigate("/dashboard/tasks/new")}
-          className="text-white bg-[#EF9B28] hover:bg-[#d98a20] px-6 py-3 rounded-full font-normal text-sm font-montserrat flex items-center gap-2 mx-6 transition-colors shadow-sm cursor-pointer"
-        >
-          <BiPlus size={20} /> Add New Task
-        </button>
-      </div>
+      {/* Header */}
+      <SubHeader
+        title="Tasks"
+        buttonLabel="Add New Task"
+        onButtonClick={() => navigate("/dashboard/tasks/new")}
+      />
 
       <div className=" py-6 px-9  bg-gray-200">
         <div className="flex bg-white rounded-lg shadow-[0px_4px_20px_0px_#0000000D] items-center gap-2 p-4 ">
@@ -209,7 +207,11 @@ export default function TaskList() {
                       {task?.project?.title || "N/A"}
                     </td>
                     <td className="p-4 w-1/6">
-                      {formatDate(task?.creationDate)}
+                      {task.creationDate
+                        ? new Date(task.creationDate).toLocaleDateString(
+                            "en-GB"
+                          )
+                        : "N/A"}{" "}
                     </td>
                     <td className="p-4 w-12 relative">
                       <button
@@ -285,29 +287,28 @@ export default function TaskList() {
         </div>
       </div>
       {/* View Task Details Modal */}
-      <TaskDetailsModal
+      <DetailsModal
+        variant="task"
         isOpen={isViewModalOpen}
         onClose={() => setIsViewModalOpen(false)}
-        task={selectedTask}
+        data={selectedTask}
         onEdit={() => {
-          if (selectedTask?.id !== undefined) {
-            setIsViewModalOpen(false);
-            navigate(`/dashboard/tasks/edit/${selectedTask.id}`);
-          }
+          setIsViewModalOpen(false);
+          navigate(`/dashboard/tasks/edit/${selectedTask?.id}`);
         }}
       />
-
-      {/* Delete Confirmation Modal */}
-      <DeleteConfirmation
+      {/*  modal delete */}
+      <ConfirmationModal
+        variant="delete"
         isOpen={isDeleteModalOpen}
+        loading={deleteLoading}
+        title="Delete Task"
+        message="Are you sure you want to delete This Task?"
         onClose={() => {
           setIsDeleteModalOpen(false);
           setTaskToDelete(null);
         }}
         onConfirm={handleDeleteConfirm}
-        title="Delete Task"
-        message="Are you sure you want to delete this task? This action cannot be undone."
-        loading={deleteLoading}
       />
     </>
   );

@@ -129,7 +129,7 @@ export default function TaskData() {
             size={20}
             className="transform transition-transform duration-200 group-hover:-translate-x-0.5"
           />
-          <span>Filter</span>
+          <span>View All Tasks</span>
         </button>
         <h1 className="text-[#0E382F] font-medium text-2xl mt-1">
           {isEditMode ? "Edit Task" : "Add a New Task"}

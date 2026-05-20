@@ -1,8 +1,8 @@
 import axiosClient from "./axiosClient";
 
 // GET  projects 
-export const getProjects = () => {
-  return axiosClient.get('/Project/manager');
+export const getProjects = (params:object) => {
+  return axiosClient.get('/Project/manager',{params});
 };
 
 // GET project by id

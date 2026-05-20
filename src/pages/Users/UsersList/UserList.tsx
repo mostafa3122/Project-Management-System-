@@ -18,6 +18,8 @@ import { toast } from "react-toastify";
 import NoData from "../../../shared/NoData/NoData";
 import Loading from "../../../shared/Loading/Loading";
 import Pagination from "../../../shared/Pagination/Pagination";
+import SubHeader from "../../../shared/SubHeader/SubHeader";
+import ConfirmationModal from "../../Projects/DeleteConfirmationModal/DeleteConfirmation";
 export default function UserList() {
   const [usersList, setUsersList] = useState<UserType[]>([]);
   const [loading, setLoading] = useState(true);
@@ -27,6 +29,7 @@ export default function UserList() {
   // confirm block
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+  const [selectedUser2, setSelectedUser2] = useState<UserType | null>(null);
   // filter  & search
   const [statusFilter, setStatusFilter] = useState("all");
   const [searchInput, setSearchInput] = useState("");
@@ -75,7 +78,7 @@ export default function UserList() {
         )
       );
     } catch (error) {
-      console.log(error);
+      toast.error(error?.response?.data?.message || "Failed to update status");
     }
   };
   useEffect(() => {
@@ -83,9 +86,8 @@ export default function UserList() {
   }, [pageNumber, pageSize]);
   return (
     <div className="bg-white">
-      <div className="header py-6 ps-10 text-[28px] ">
-        <h3>Users</h3>
-      </div>
+      {/* Header */}
+      <SubHeader title="Users" />
 
       <div className="py-6 px-9 bg-gray-200">
         <div className=" bg-white rounded-lg shadow-[0px_4px_20px_0px_#0000000D] items-center gap-2 ">
@@ -224,7 +226,7 @@ export default function UserList() {
                         <div className="invisible absolute z-10 right-0 top-10 w-32 rounded-lg overflow-hidden bg-white shadow-md opacity-0 transition-all duration-200 group-focus-within:visible group-focus-within:opacity-100">
                           <button
                             onClick={() => {
-                              setSelectedUserId(user.id);
+                              setSelectedUser2(user);
                               setConfirmOpen(true);
                             }}
                             className=" cursor-pointer block w-full px-4 text-red-500 py-2 text-left hover:bg-gray-100"
@@ -382,40 +384,22 @@ export default function UserList() {
           </div>
         </div>
       )}
-      {confirmOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-          <div className="w-90 rounded-2xl bg-white p-6 shadow-lg">
-            <h2 className="text-lg font-semibold text-gray-800">
-              Are you sure?
-            </h2>
-
-            <p className="mt-2 text-sm text-gray-500">
-              This action will change user status.
-            </p>
-
-            <div className="mt-6 flex justify-end gap-3">
-              <button
-                onClick={() => setConfirmOpen(false)}
-                className="rounded-lg bg-gray-200 px-4 py-2 text-sm hover:bg-gray-300"
-              >
-                Cancel
-              </button>
-
-              <button
-                onClick={async () => {
-                  if (selectedUserId !== null) {
-                    await handleToggleStatus(selectedUserId);
-                  }
-                  setConfirmOpen(false);
-                }}
-                className="rounded-lg bg-red-500 px-4 py-2 text-sm text-white hover:bg-red-600"
-              >
-                Confirm
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <ConfirmationModal
+        variant="block"
+        isOpen={confirmOpen}
+        title={selectedUser2?.isActivated ? "Block User" : "Unblock User"}
+        message={`Are you sure you want to ${
+          selectedUser2?.isActivated ? "block" : "unblock"
+        } "${selectedUser2?.userName}"?`}
+        confirmLabel={selectedUser2?.isActivated ? "Block" : "Unblock"}
+        onClose={() => setConfirmOpen(false)}
+        onConfirm={async () => {
+          if (selectedUser2 !== null) {
+            await handleToggleStatus(selectedUser2.id);
+          }
+          setConfirmOpen(false);
+        }}
+      />
     </div>
   );
 }
