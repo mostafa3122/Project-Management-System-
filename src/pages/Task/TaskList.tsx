@@ -1,23 +1,24 @@
+import { useEffect, useState } from "react";
 import {
+  BiDotsHorizontalRounded,
+  BiEdit,
+  BiFilter,
   BiPlus,
   BiSearch,
-  BiDotsHorizontalRounded,
   BiShow,
-  BiEdit,
   BiTrash,
-  BiFilter,
 } from "react-icons/bi";
 import { LuChevronsUpDown } from "react-icons/lu";
-import { DeleteTask, GetAllTasks } from "../../services/api/tasks";
-import { useEffect, useState } from "react";
-import type { ITask } from "../../interfaces/task.interface";
-import { GoChevronLeft, GoChevronRight } from "react-icons/go";
-import { toast } from "react-toastify";
-import { MdOutlineArrowDropDown } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import type { ITask } from "../../interfaces/task.interface";
+import { DeleteTask, GetAllTasks } from "../../services/api/tasks";
 import DeleteConfirmation from "../../shared/DeleteConfirmation/DeleteConfirmation";
-import TaskDetailsModal from "./components/TaskDetailsModal";
+import Loading from "../../shared/Loading/Loading";
+import NoData from "../../shared/NoData/NoData";
+import Pagination from "../../shared/Pagination/Pagination";
 import StatusBadge from "../../shared/StatusBadge/StatusBadge";
+import TaskDetailsModal from "./components/TaskDetailsModal";
 
 const formatDate = (dateString?: string) => {
   if (!dateString) return "N/A";
@@ -67,8 +68,6 @@ export default function TaskList() {
           title: debouncedSearchTitle || undefined,
         });
         setTasksList(response.data.data || []);
-        console.log(response.data.data);
-
         setTotalRecords(response.data.totalNumberOfRecords || 0);
       } catch (error: any) {
         toast.error(error.message);
@@ -108,7 +107,7 @@ export default function TaskList() {
 
   return (
     <>
-      <div className="bg-white flex justify-between items-center py-2 mb-6 font-montserrat">
+      <div className="bg-white flex justify-between items-center py-2  font-montserrat">
         <h1 className="px-6 py-4 text-[#4F4F4F] font-medium text-[28px] ">
           Tasks
         </h1>
@@ -120,8 +119,8 @@ export default function TaskList() {
         </button>
       </div>
 
-      <div className="bg-white rounded-xl border border-[#F1F5F9] shadow-[0px_4px_20px_0px_#0000000D] mx-auto max-w-6xl">
-        <div className="flex items-center gap-2 p-4">
+      <div className=" py-6 px-9  bg-gray-200">
+        <div className="flex bg-white rounded-lg shadow-[0px_4px_20px_0px_#0000000D] items-center gap-2 p-4 ">
           <div className="relative flex items-center">
             <BiSearch className="absolute left-4 text-[#4F4F4F]" size={20} />
             <input
@@ -140,37 +139,36 @@ export default function TaskList() {
             <span>Filter</span>
           </button>
         </div>
-
         <div className="w-full overflow-visible">
-          <table className="w-full border-collapse table-auto responsive">
-            <thead>
-              <tr className="bg-[#315951E5] text-white text-left font-montserrat text-sm font-semibold divide-x divide-[#315951E5] border border-[#315951E5]">
+          <table className="table custom-table w-full   ">
+            <thead className="custom-head">
+              <tr>
                 <th className="px-6 py-2 font-normal w-1/4">
-                  <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-3">
                     <span>Title</span>
                     <LuChevronsUpDown size={16} className="text-white" />
                   </div>
                 </th>
                 <th className="px-6 py-2 font-normal w-1/6">
-                  <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-3">
                     <span>Statuses</span>
                     <LuChevronsUpDown size={16} className="text-white" />
                   </div>
                 </th>
                 <th className="px-6 py-2 font-normal w-1/6">
-                  <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-3">
                     <span>User</span>
                     <LuChevronsUpDown size={16} className="text-white" />
                   </div>
                 </th>
                 <th className="px-6 py-2 font-normal w-1/6">
-                  <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-3">
                     <span>Project</span>
                     <LuChevronsUpDown size={16} className="text-white" />
                   </div>
                 </th>
                 <th className="px-6 py-2 font-normal w-1/6">
-                  <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-3">
                     <span>Date Created</span>
                     <LuChevronsUpDown size={16} className="text-white" />
                   </div>
@@ -181,22 +179,17 @@ export default function TaskList() {
             <tbody className="divide-y divide-gray-100 text-sm text-[#4F4F4F] text-normal">
               {loading ? (
                 <tr>
-                  <td colSpan={6} className="text-center py-10">
-                    <div className="flex flex-col items-center justify-center gap-3">
-                      <div className="w-10 h-10 border-4 border-[#315951]/20 border-t-[#315951] rounded-full animate-spin"></div>
-                      <p className="text-[#315951] font-montserrat font-medium text-sm">
-                        Loading tasks...
-                      </p>
-                    </div>
+                  <td colSpan={7}>
+                    <Loading />
                   </td>
                 </tr>
               ) : tasksList?.length === 0 ? (
                 <tr>
                   <td
-                    colSpan={6}
-                    className="text-center py-10 text-gray-500 font-montserrat"
+                    colSpan={7}
+                    className="text-center text-gray-500 font-montserrat bg-white"
                   >
-                    No tasks found.
+                    <NoData />
                   </td>
                 </tr>
               ) : (
@@ -205,26 +198,26 @@ export default function TaskList() {
                     className="odd:bg-white even:bg-[#F8F9FA] hover:bg-gray-100/70 transition-colors"
                     key={task?.id ?? index}
                   >
-                    <td className="px-6 py-2 w-1/4 ">{task?.title}</td>
-                    <td className="px-6 py-2 w-1/6 ">
+                    <td className="p-4 w-1/4 ">{task?.title}</td>
+                    <td className="p-4 w-1/6 ">
                       <StatusBadge status={task?.status || ""} />
                     </td>
-                    <td className="px-6 py-2 w-1/6">
+                    <td className="p-4 w-1/6">
                       {task?.employee?.userName || "Unassigned"}
                     </td>
-                    <td className="px-6 py-2 w-1/6">
+                    <td className="p-4 w-1/6">
                       {task?.project?.title || "N/A"}
                     </td>
-                    <td className="px-6 py-2 w-1/6">
+                    <td className="p-4 w-1/6">
                       {formatDate(task?.creationDate)}
                     </td>
-                    <td className="px-6 py-2 w-12 relative">
+                    <td className="p-4 w-12 relative">
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
                           if (task?.id !== undefined) {
                             setActiveDropdownId(
-                              activeDropdownId === task.id ? null : task.id,
+                              activeDropdownId === task.id ? null : task.id
                             );
                           }
                         }}
@@ -282,57 +275,13 @@ export default function TaskList() {
               )}
             </tbody>
           </table>
-        </div>
-
-        {/*pagination ui*/}
-        <div className="flex justify-end items-center gap-6 text-sm text-[#4F4F4F] font-montserrat mt-5 mb-5 pt-5 border-t border-[#F1F5F9]">
-          <div className="flex items-center gap-2">
-            <span className="text-[#4F4F4F] font-normal">Showing</span>
-
-            <div className="relative flex items-center">
-              <select
-                value={pageSize}
-                onChange={(e) => {
-                  setPageSize(Number(e.target.value));
-                  setPageNumber(1);
-                }}
-                className="appearance-none pl-3 pr-8 py-1.5 border border-[#26385A40] rounded-lg bg-white text-[#4F4F4F] font-normal focus:outline-none cursor-pointer text-sm"
-              >
-                <option value={10}>10</option>
-                <option value={20}>20</option>
-                <option value={50}>50</option>
-              </select>
-
-              <span className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-[10px] text-gray-500">
-                <MdOutlineArrowDropDown size={16} className="text-gray-500" />
-              </span>
-            </div>
-
-            <span className="text-[#4F4F4F] font-normal pl-1">
-              of {totalRecords} Results
-            </span>
-          </div>
-
-          <div className="text-[#4F4F4F] font-normal">
-            Page {pageNumber} of {Math.ceil(totalRecords / pageSize) || 1}
-          </div>
-
-          <div className="flex items-center gap-3 pl-2">
-            <button
-              disabled={pageNumber === 1}
-              onClick={() => setPageNumber((prev) => prev - 1)}
-              className="text-gray-400 hover:text-gray-700 disabled:opacity-30 disabled:cursor-not-allowed p-1 transition-colors cursor-pointer text-base font-medium"
-            >
-              <GoChevronLeft />
-            </button>
-            <button
-              disabled={pageNumber * pageSize >= totalRecords}
-              onClick={() => setPageNumber((prev) => prev + 1)}
-              className="text-gray-400 hover:text-gray-700 disabled:opacity-30 disabled:cursor-not-allowed p-1 transition-colors cursor-pointer text-base font-medium"
-            >
-              <GoChevronRight />
-            </button>
-          </div>
+          <Pagination
+            pageNumber={pageNumber}
+            pageSize={pageSize}
+            totalRecords={totalRecords}
+            onPageChange={setPageNumber}
+            onPageSizeChange={setPageSize}
+          />
         </div>
       </div>
       {/* View Task Details Modal */}
