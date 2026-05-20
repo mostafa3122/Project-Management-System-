@@ -9,9 +9,10 @@ export interface IRegisterData {
   email: string;
   country: string;
   phoneNumber: string;
-  profileImage: File;
+  profileImage?: FileList;
   password: string;
   confirmPassword: string;
+  // error:string;
 }
 /* Forget Pass Interface */
 export interface IForgetPasswordData {

@@ -1,0 +1,86 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AxiosError } from "axios";
+import { useContext } from "react";
+import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import type z from "zod";
+import AuthButton from "../../../components/AuthButton";
+import { userContext } from "../../../context/userContext";
+import { loginSchema } from "../../../schema/auth.schema";
+import { LoginApi } from "../../../services/api/auth";
+import InputField from "../../../shared/InputField/InputField";
+import { loginInputs } from "./login.inputs";
+
+export default function Login() {
+  const navigate = useNavigate();
+  const { setUserToken } = useContext(userContext)!;
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
+  });
+
+  const onSubmit = async (data: z.infer<typeof loginSchema>) => {
+    try {
+      const response = await LoginApi({
+        email: data.email,
+        password: data.password,
+      });
+      const token = response.data.token;
+      if (token) {
+        localStorage.setItem("token", token);
+        setUserToken(token);
+      }
+      toast.success(response.data.message || "Login successfully!");
+      navigate("/welcome");
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        toast.error(error.response?.data?.message || "Something went wrong");
+      } else {
+        toast.error("Unexpected error");
+      }
+    }
+  };
+
+  return (
+    <>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {loginInputs.map((input) => (
+          <InputField
+            key={input.name}
+            label={input.label}
+            inputName={input.name}
+            type={input.type}
+            register={register}
+            error={errors[input.name as keyof typeof errors]?.message}
+            placeholder={input.placeholder}
+            fullWidth={true}
+          />
+        ))}
+
+        <div className="flex justify-between mt-4">
+          <Link
+            to="/register"
+            className="text-sm text-gray-300 hover:text-gray-400 transition-colors"
+          >
+            Register Now?
+          </Link>
+          <Link
+            to="/forget-password"
+            className="text-sm text-gray-300 hover:text-gray-400 transition-colors"
+          >
+            Forget Password?
+          </Link>
+        </div>
+
+        <div className="text-center text-white mt-6">
+          <AuthButton isSubmitting={isSubmitting} label="Login" />
+        </div>
+      </form>
+    </>
+  );
+}
