@@ -1,9 +1,16 @@
+import { ToastContainer } from "react-toastify";
 import "./App.css";
+import Routes from "./Routes/Routes";
+import UserContextProvider from "./context/userContext";
+
 
 function App() {
   return (
     <>
-      <h1 className="bg-amber-300 py-5 text-center ">PMS</h1>
+      <UserContextProvider>
+        <Routes />
+        <ToastContainer position="top-right" autoClose={3000} />
+      </UserContextProvider>
     </>
   );
 }
