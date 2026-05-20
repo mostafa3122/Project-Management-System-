@@ -18,7 +18,7 @@ export default function MasterLayout() {
         </div>
 
         {/* Page Content */}
-        <div className="flex-1 overflow-y-auto p-2 bg-gray-300">
+        <div className="flex-1 overflow-y-auto bg-gray-200">
           <Outlet />
         </div>
       </div>

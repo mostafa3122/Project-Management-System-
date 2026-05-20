@@ -12,8 +12,8 @@ export interface ITaskProject {
 
 export interface ITask {
   id?: number;
-  title?: string;
-  description?: string;
+  title: string;
+  description: string;
   status?: "ToDo" | "InProgress" | "Done" | string;
   employee?: ITaskUser | null;
   project?: ITaskProject | null;
