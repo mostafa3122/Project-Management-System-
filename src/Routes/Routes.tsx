@@ -14,7 +14,8 @@ import ProtectedRoute from "./ProtectedRoutes";
 import UserList from "../pages/Users/UsersList/UserList";
 import TaskList from "../pages/Task/TaskList";
 import TaskData from "../pages/Task/TaskData/TaskData";
-import Projects from "../pages/Projects/Projects";
+import ProjectList from "../pages/Projects/ProjectList/ProjectList";
+import ProjectForm from "../pages/Projects/ProjectForm/ProjectForm";
 // import ProtectedRoute from "./ProtectedRoutes";
 
 // const routes = createBrowserRouter([
@@ -104,7 +105,13 @@ const routes = createBrowserRouter([
       { index: true, element: <Dashboard /> },
       { path: "", element: <Dashboard /> },
       { path: "users", element: <UserList /> },
-      { path: "projects", element: <Projects /> },
+      {
+        path: "projects",
+        element: <ProjectList />
+      },
+      { path: "projects/add", element: <ProjectForm /> },
+      { path: "projects/edit/:id", element: <ProjectForm /> },
+      { path: "projects/view/:id", element: <ProjectForm /> },
       { path: "tasks", element: <TaskList /> },
       { path: "tasks/new", element: <TaskData /> },
       { path: "tasks/edit/:id", element: <TaskData /> },
