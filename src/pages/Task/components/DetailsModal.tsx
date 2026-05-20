@@ -10,6 +10,7 @@ import {
 } from "react-icons/bi";
 import StatusBadge from "../../../shared/StatusBadge/StatusBadge";
 
+
 type ModalVariant = "task" | "project";
 
 interface BaseModalProps {
@@ -100,7 +101,7 @@ export default function DetailsModal({
           </button>
         </div>
 
-        {/* Body */}
+
         <div className="p-6 font-quicksand space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Status */}
@@ -109,11 +110,11 @@ export default function DetailsModal({
                 Status
               </span>
               <div className="mt-2">
-                <StatusBadge status={data.status || ""} />
+                <StatusBadge status={data.status || (variant === "project" ? "Public" : "")} />
               </div>
             </div>
 
-            {/* Task: Project | Project: Num Tasks */}
+
             <div className="bg-[#F9F9F6] border border-[#ECECE8] rounded-2xl p-4 flex flex-col justify-between min-h-[90px]">
               {isTask ? (
                 <>
@@ -144,7 +145,7 @@ export default function DetailsModal({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Task: Assigned To | Project: مش موجود */}
+
             {isTask && (
               <div className="bg-[#F9F9F6] border border-[#ECECE8] rounded-2xl p-4 flex flex-col justify-between min-h-[90px]">
                 <span className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">
@@ -161,7 +162,7 @@ export default function DetailsModal({
               </div>
             )}
 
-            {/* Date Created */}
+
             <div className="bg-[#F9F9F6] border border-[#ECECE8] rounded-2xl p-4 flex flex-col justify-between min-h-[90px]">
               <span className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">
                 Date Created
@@ -173,19 +174,17 @@ export default function DetailsModal({
             </div>
           </div>
 
-          {/* Description */}
-          {isTask && (
-            <div>
-              <span className="text-[11px] font-bold text-gray-400 uppercase tracking-wider block mb-2">
-                Description
-              </span>
-              <div className="bg-[#F9F9F6] border border-[#ECECE8] rounded-2xl p-4 min-h-[80px] text-sm text-gray-700 leading-relaxed">
-                {taskData?.description || "No description provided."}
-              </div>
-            </div>
-          )}
 
-          {/* Footer */}
+          <div>
+            <span className="text-[11px] font-bold text-gray-400 uppercase tracking-wider block mb-2">
+              Description
+            </span>
+            <div className="bg-[#F9F9F6] border border-[#ECECE8] rounded-2xl p-4 min-h-[80px] text-sm text-gray-700 leading-relaxed">
+              {data.description || "No description provided."}
+            </div>
+          </div>
+
+
           <div className="border-t border-gray-100 pt-5 flex items-center justify-between">
             <div className="flex items-center gap-1.5 text-xs text-gray-400 font-normal">
               <BiInfoCircle size={16} />

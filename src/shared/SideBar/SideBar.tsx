@@ -33,7 +33,7 @@ const IconTasks = () => (
     <line x1="8" y1="6" x2="21" y2="6" />
     <line x1="8" y1="12" x2="21" y2="12" />
     <line x1="8" y1="18" x2="21" y2="18" />
-    <circle cx="3" cy="6"  r="1" fill="currentColor" stroke="none" />
+    <circle cx="3" cy="6" r="1" fill="currentColor" stroke="none" />
     <circle cx="3" cy="12" r="1" fill="currentColor" stroke="none" />
     <circle cx="3" cy="18" r="1" fill="currentColor" stroke="none" />
   </svg>
@@ -53,10 +53,10 @@ const IconChevron = ({ flipped }: { flipped: boolean }) => (
 
 // ── Nav items ─────────────────────────────────────────────────────────────────
 const NAV_ITEMS = [
-  { label: "Home",     to: "/dashboard",        icon: <IconHome />     },
-  { label: "Users",    to: "/dashboard/users",   icon: <IconUsers />    },
-  { label: "Projects", to: "/dashboard/projects",icon: <IconProjects /> },
-  { label: "Tasks",    to: "/dashboard/tasks",   icon: <IconTasks />    },
+  { label: "Home", to: "/dashboard", icon: <IconHome /> },
+  { label: "Users", to: "/dashboard/users", icon: <IconUsers /> },
+  { label: "Projects", to: "/dashboard/projects", icon: <IconProjects /> },
+  { label: "Tasks", to: "/dashboard/tasks", icon: <IconTasks /> },
 ];
 
 // ── Sidebar ───────────────────────────────────────────────────────────────────
@@ -93,9 +93,9 @@ export default function Sidebar() {
             className={({ isActive }) =>
               `flex items-center gap-3 rounded-xl px-3 py-3 transition-colors duration-200 group
                ${isActive
-                 ? "text-[#EF9B28]"
-                 : "text-white/60 hover:text-white hover:bg-white/5"
-               }`
+                ? "text-[#EF9B28]"
+                : "text-white/60 hover:text-white hover:bg-white/5"
+              }`
             }
           >
             {({ isActive }) => (
