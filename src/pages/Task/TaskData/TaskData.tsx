@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiChevronLeft } from "react-icons/fi";
 import { useNavigate, useParams } from "react-router-dom";
+import type { AxiosError } from "axios";
 import type { ITask } from "../../../interfaces/task.interface";
 import { toast } from "react-toastify";
 import {
@@ -56,12 +57,9 @@ export default function TaskData() {
         toast.success("Task created successfully!");
       }
       navigate("/dashboard/tasks");
-    } catch (error: any) {
-      const errorMsg =
-        error.response?.data?.message ||
-        error.message ||
-        "Failed to save task.";
-      toast.error(errorMsg);
+    } catch (error) {
+      const axiosError = error as AxiosError<any>;
+      toast.error(axiosError.response?.data?.message || "something went wrong");
     } finally {
       setSubmitting(false);
     }
@@ -102,11 +100,15 @@ export default function TaskData() {
             projectId: task.project?.id || "",
           });
         }
-
         setProjectsList(projects);
         setUsersList(employees);
       } catch (error) {
-        toast.error("Failed to load task details.");
+        const axiosError = error as AxiosError<any>;
+        toast.error(
+          axiosError.response?.data?.message ||
+          axiosError.message ||
+          "Failed to load task details."
+        );
       } finally {
         setLoading(false);
       }

@@ -21,3 +21,6 @@ export interface ITask {
   projectId?: number | string;
   creationDate?: string;
 }
+export interface ITaskResponse {
+  message: string;
+}
