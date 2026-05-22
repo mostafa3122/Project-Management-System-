@@ -2,20 +2,57 @@
 
 @import "tailwindcss";
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
   font-family: "Inter", sans-serif;
 }
 
 .landing {
   position: relative;
-  background-image: url("/authPic.svg");
+  background-image: url("./assets/authPic.svg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+}
+
+.register-bg,
+.reset-bg {
+  background-image: url(./assets/register&reset.jpeg);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.profile-img {
+  background-image: url(./assets/user-image.jpg);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.login-bg {
+  background-image: url(./assets/login-bg.jpg);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.change-bg,
+.verify-bg {
+  background-image: url(./assets/change&verify.jpg);
+  background-size: 100% 100%;
+  background-position: center ;
+  background-repeat: no-repeat;
+}
+.forget-bg{
+  background-image: url(./assets/forget-bg.jpg);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.dashboard-bg {
+  background-image: url(./assets/dashboard.jpg);
+  background-size: cover;
+  background-position: 100% 41%;
+  background-repeat: no-repeat;
 }
