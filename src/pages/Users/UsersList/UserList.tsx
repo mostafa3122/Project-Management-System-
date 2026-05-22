@@ -29,14 +29,14 @@ export default function UserList() {
   const [selectedUser, setSelectedUser] = useState(null);
   // confirm block
   const [confirmOpen, setConfirmOpen] = useState(false);
-  const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+  // const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
   const [selectedUser2, setSelectedUser2] = useState<UserType | null>(null);
   // filter  & search
   const [statusFilter, setStatusFilter] = useState("all");
   const [searchInput, setSearchInput] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
 
-  const filteredUsers = usersList.filter((user) => {
+  const filteredUsers = usersList.filter((user: UserType) => {
     const matchStatus =
       statusFilter === "active"
         ? user.isActivated === true
@@ -46,12 +46,12 @@ export default function UserList() {
     return matchStatus;
   });
 
-  // pagination
+
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [totalRecords, setTotalRecords] = useState(0);
 
-  // Search Debounce Effect
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(searchInput);
@@ -62,7 +62,7 @@ export default function UserList() {
     };
   }, [searchInput]);
 
-  // get all users
+
   const getUsers = async () => {
     try {
       setLoading(true);
@@ -85,7 +85,7 @@ export default function UserList() {
     try {
       setToggleLoading(true);
       await ToggleStatusApi(id);
-      
+
       const user = usersList.find((u: any) => u.id === id);
       const isCurrentlyActivated = user?.isActivated;
 

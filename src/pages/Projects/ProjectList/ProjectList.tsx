@@ -79,8 +79,11 @@ export default function ProjectList() {
       setOpenDelete(false);
       setSelectedId(null);
     } catch (error) {
+      const axiosError = error as AxiosError<any>;
       toast.error(
-        (error as any)?.response?.data?.message || "Failed to delete project"
+        axiosError.response?.data?.message ||
+        axiosError.message ||
+        "Failed to delete project"
       );
     } finally {
       setLoading(false);
@@ -91,7 +94,7 @@ export default function ProjectList() {
     getProjectsList();
   }, [pageNumber, pageSize]);
 
-  // filter projects based on search value
+
   const filteredProjects = allProjects.filter((project) =>
     project.title?.toLowerCase().includes(searchValue.toLowerCase())
   );

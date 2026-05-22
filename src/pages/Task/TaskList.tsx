@@ -9,6 +9,7 @@ import {
   BiTrash,
 } from "react-icons/bi";
 import { LuChevronsUpDown } from "react-icons/lu";
+import type { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import type { ITask } from "../../interfaces/task.interface";
@@ -72,8 +73,13 @@ export default function TaskList() {
         });
         setTasksList(response.data.data || []);
         setTotalRecords(response.data.totalNumberOfRecords || 0);
-      } catch (error: any) {
-        toast.error(error.message);
+      } catch (error) {
+        const axiosError = error as AxiosError<any>;
+        toast.error(
+          axiosError.response?.data?.message ||
+          axiosError.message ||
+          "Failed to fetch tasks"
+        );
       } finally {
         setLoading(false);
       }
@@ -91,8 +97,13 @@ export default function TaskList() {
       setIsDeleteModalOpen(false);
       setTaskToDelete(null);
       setPageNumber(1);
-    } catch (error: any) {
-      toast.error(error?.message || "Failed to delete task");
+    } catch (error) {
+      const axiosError = error as AxiosError<any>;
+      toast.error(
+        axiosError.response?.data?.message ||
+        axiosError.message ||
+        "Failed to delete task"
+      );
     } finally {
       setDeleteLoading(false);
     }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
+import type { AxiosError } from "axios";
 import type { NewProject } from "../../../interfaces/project.interface";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -60,7 +61,12 @@ export default function ProjectForm() {
       setValue("description", data.description ?? "");
 
     } catch (error) {
-      toast.error("Failed to load project");
+      const axiosError = error as AxiosError<any>;
+      toast.error(
+        axiosError.response?.data?.message ||
+        axiosError.message ||
+        "Failed to load project"
+      );
       console.error("GET ERROR:", error);
     } finally {
       setLoading(false);
@@ -90,8 +96,11 @@ export default function ProjectForm() {
       navigate("/dashboard/projects");
 
     } catch (error) {
+      const axiosError = error as AxiosError<any>;
       toast.error(
-        (error as any)?.response?.data?.message || "Something went wrong"
+        axiosError.response?.data?.message ||
+        axiosError.message ||
+        "Something went wrong"
       );
       console.error("SUBMIT ERROR:", error);
     } finally {
