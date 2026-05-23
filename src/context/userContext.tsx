@@ -7,6 +7,9 @@ interface UserData {
   userName?: string;
   email?: string;
   imagePath?: string;
+  group?: {
+    name?: string;
+  };
 }
 
 interface UserContextType {
