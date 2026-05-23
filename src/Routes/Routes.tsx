@@ -5,16 +5,17 @@ import Login from "../pages/Auth/Login/Login";
 import Register from "../pages/Auth/Register/Register";
 import ResetPassword from "../pages/Auth/ResetPassword/ResetPassword";
 import VerifyAccount from "../pages/Auth/VerifyAccount/VerifyAccount";
+import Dashboard from "../pages/Dashboard/Dashboard";
 import WelcomeComponent from "../pages/WelcomeComponent/WelcomeComponent";
-import NotFound from "../shared/NotFound/NotFound";
 import AuthLayout from "../shared/layouts/AuthLayout/AuthLayout";
 import MasterLayout from "../shared/layouts/MasterLayout/MasterLayout";
-import Dashboard from "../pages/Dashboard/Dashboard";
+import NotFound from "../shared/NotFound/NotFound";
 import ProtectedRoute from "./ProtectedRoutes";
-import Users from "../pages/Users/Users";
-import Projects from "../pages/Projects/Projects";
-import Tasks from "../pages/Tasks/Tasks";
-import ManagerOrEmployee from "./ManagerOrEmployee";
+import UserList from "../pages/Users/UsersList/UserList";
+import TaskList from "../pages/Task/TaskList";
+import TaskData from "../pages/Task/TaskData/TaskData";
+import ProjectList from "../pages/Projects/ProjectList/ProjectList";
+import ProjectForm from "../pages/Projects/ProjectForm/ProjectForm";
 // import ProtectedRoute from "./ProtectedRoutes";
 
 // const routes = createBrowserRouter([
@@ -95,17 +96,25 @@ const routes = createBrowserRouter([
   {
     path: "/dashboard",
     element: (
-      // <ProtectedRoute>
+      <ProtectedRoute>
         <MasterLayout />
-      /* </ProtectedRoute> */
+      </ProtectedRoute>
     ),
     errorElement: <NotFound />,
     children: [
       { index: true, element: <Dashboard /> },
-      { path: "", element:<ProtectedRoute><ManagerOrEmployee> <Dashboard /> </ManagerOrEmployee></ProtectedRoute> },
-      { path: "users", element:<ProtectedRoute><ManagerOrEmployee> <Users /> </ManagerOrEmployee></ProtectedRoute> },
-      { path: "projects", element:<ProtectedRoute><ManagerOrEmployee> <Projects /> </ManagerOrEmployee></ProtectedRoute> },
-      { path: "tasks", element:<ProtectedRoute><ManagerOrEmployee> <Tasks /> </ManagerOrEmployee></ProtectedRoute> },
+      { path: "", element: <Dashboard /> },
+      { path: "users", element: <UserList /> },
+      {
+        path: "projects",
+        element: <ProjectList />
+      },
+      { path: "projects/add", element: <ProjectForm /> },
+      { path: "projects/edit/:id", element: <ProjectForm /> },
+      { path: "projects/view/:id", element: <ProjectForm /> },
+      { path: "tasks", element: <TaskList /> },
+      { path: "tasks/new", element: <TaskData /> },
+      { path: "tasks/edit/:id", element: <TaskData /> },
     ],
   },
   { path: "welcome", element: <WelcomeComponent /> },
