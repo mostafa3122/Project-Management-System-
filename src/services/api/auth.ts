@@ -11,7 +11,9 @@ export const LoginApi = (data: ILoginData) => {
   return axiosClient.post("/Users/Login", data);
 };
 export const RegisterApi = (data: FormData) => {
-  return axiosClient.post("/Users/Register", data);
+  return axiosClient.post("/Users/Register", data, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
 };
 export const VerifyApi = (data: IVerifyAccountData) => {
   return axiosClient.put("/Users/verify", data);
