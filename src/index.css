@@ -1,9 +1,14 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Quicksand:wght@300..700&display=swap");
 
 @import "tailwindcss";
 
 body {
-  font-family: "Inter", sans-serif;
+  font-family: "Montserrat", sans-serif;
+}
+
+@theme {  
+  --font-montserrat: "Montserrat", sans-serif;
+  --font-quicksand: "Quicksand", sans-serif;
 }
 
 .landing {
@@ -40,10 +45,11 @@ body {
 .verify-bg {
   background-image: url(./assets/change&verify.jpg);
   background-size: 100% 100%;
-  background-position: center ;
+  background-position: center;
   background-repeat: no-repeat;
 }
-.forget-bg{
+
+.forget-bg {
   background-image: url(./assets/forget-bg.jpg);
   background-size: 100% 100%;
   background-position: center;
@@ -55,4 +61,12 @@ body {
   background-size: cover;
   background-position: 100% 41%;
   background-repeat: no-repeat;
+}
+
+.custom-head tr th {
+  background: #315951E5 !important;
+  color: #fff;
+  padding: 19px 16px;
+  border: #315951E5 solid 1px;
+  font-size: 14px;
 }

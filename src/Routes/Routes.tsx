@@ -16,47 +16,7 @@ import TaskList from "../pages/Task/TaskList";
 import TaskData from "../pages/Task/TaskData/TaskData";
 import ProjectList from "../pages/Projects/ProjectList/ProjectList";
 import ProjectForm from "../pages/Projects/ProjectForm/ProjectForm";
-// import ProtectedRoute from "./ProtectedRoutes";
-
-// const routes = createBrowserRouter([
-//   {
-//     path: "/",
-//     element: <Login />,
-//     errorElement: <NotFound />,
-//   },
-//   {
-//     index: true,
-//     element: <Login />,
-//   },
-//   {
-//     path: "login",
-//     element: <Login />,
-//   },
-//   {
-//     path: "register",
-//     element: <Register />,
-//   },
-//   {
-//     path: "verify-account",
-//     element: <VerifyAccount />,
-//   },
-//   {
-//     path: "forget-password",
-//     element: <ForgetPassword />,
-//   },
-//   {
-//     path: "change-password",
-//     element: <ChangePassword />,
-//   },
-//   {
-//     path: "reset-password",
-//     element: <ResetPassword />,
-//   },
-//   {
-//     path: "navbar",
-//     element: <Navbar />,
-//   },
-// ]);
+import ManagerOrEmployee from "./ManagerOrEmployee";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -104,17 +64,17 @@ const routes = createBrowserRouter([
     children: [
       { index: true, element: <Dashboard /> },
       { path: "", element: <Dashboard /> },
-      { path: "users", element: <UserList /> },
+      { path: "users", element: <ManagerOrEmployee><UserList /></ManagerOrEmployee> },
       {
         path: "projects",
-        element: <ProjectList />
+        element: <ManagerOrEmployee><ProjectList /></ManagerOrEmployee>
       },
-      { path: "projects/add", element: <ProjectForm /> },
-      { path: "projects/edit/:id", element: <ProjectForm /> },
-      { path: "projects/view/:id", element: <ProjectForm /> },
-      { path: "tasks", element: <TaskList /> },
-      { path: "tasks/new", element: <TaskData /> },
-      { path: "tasks/edit/:id", element: <TaskData /> },
+      { path: "projects/add", element: <ManagerOrEmployee><ProjectForm /></ManagerOrEmployee> },
+      { path: "projects/edit/:id", element: <ManagerOrEmployee><ProjectForm /></ManagerOrEmployee> },
+      { path: "projects/view/:id", element: <ManagerOrEmployee><ProjectForm /></ManagerOrEmployee> },
+      { path: "tasks", element: <ManagerOrEmployee><TaskList /></ManagerOrEmployee> },
+      { path: "tasks/new", element: <ManagerOrEmployee><TaskData /></ManagerOrEmployee> },
+      { path: "tasks/edit/:id", element: <ManagerOrEmployee><TaskData /></ManagerOrEmployee> },
     ],
   },
   { path: "welcome", element: <WelcomeComponent /> },

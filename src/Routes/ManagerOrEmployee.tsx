@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
 import { userContext } from '../context/userContext'
 
-const AdminOrUser = ({ children }: { children: React.ReactNode }) => {
+const ManagerOrEmployee = ({ children }: { children: React.ReactNode }) => {
   const { pathname } = useLocation()
   const { userData } = useContext(userContext) || {}
 
@@ -32,4 +32,4 @@ const AdminOrUser = ({ children }: { children: React.ReactNode }) => {
   return <Navigate to='/no-data' replace />
 }
 
-export default AdminOrUser
+export default ManagerOrEmployee

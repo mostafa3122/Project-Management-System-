@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+// Import your axios client
 import axiosClient from "../services/api/axiosClient"; 
 
 interface UserData {
@@ -7,7 +8,7 @@ interface UserData {
   email?: string;
   imagePath?: string;
   group?: {
-    name: string;
+    name?: string;
   };
 }
 
@@ -22,7 +23,7 @@ export const userContext = createContext<UserContextType | null>(null);
 export default function UserContextProvider({ children }: { children: React.ReactNode }) {
   const [userToken, setUserToken] = useState<string | null>(null);
   const [userData, setUserData] = useState<UserData | null>(null);
-  
+
   
   const getCurrentUser = async () => {
     try {
