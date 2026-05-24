@@ -109,8 +109,9 @@ function DonutCard({
               ))}
             </Pie>
             <Tooltip
-              formatter={(value) => [value ?? 0, ""]}
-              contentStyle={{ borderRadius: 8, border: "none", fontSize: 12 }}
+              formatter={(value:number, name:string) => [value ?? 0, name]}
+              contentStyle={{ borderRadius: 8, border: "none", fontSize: 12 , zIndex:99999 }}
+              labelStyle={{ display: "none" }}
             />
           </PieChart>
         </ResponsiveContainer>
@@ -262,18 +263,22 @@ export default function Dashboard() {
   const isEmployee = userData?.group?.name === "Employee";
 
   useEffect(() => {
-    Promise.all([
-      axiosClient.get("/Task/count"),
-      axiosClient.get("/Users/count"),
-    ])
+    if (!userData) return; 
+
+    const isEmp = userData?.group?.name === "Employee";
+
+    const requests = isEmp
+      ? [axiosClient.get("/Task/count")]
+      : [axiosClient.get("/Task/count"), axiosClient.get("/Users/count")];
+
+    Promise.all(requests)
       .then(([t, u]) => {
         setTaskCount(t.data);
-        setUserCount(u.data);
+        if (u) setUserCount(u.data);
       })
       .catch(console.error)
       .finally(() => setLoading(false));
-  }, []);
-
+  }, [userData]); 
   const taskChartData = taskCount
     ? [
         { name: "To Do", value: taskCount.toDo },
@@ -291,13 +296,12 @@ export default function Dashboard() {
 
   return (
     <div className="p-6 bg-[#F5F5F5] dark:bg-slate-900 min-h-screen transition-colors duration-200">
-
-    {/* ── Welcome Banner ── */}
+      {/* ── Welcome Banner ── */}
       <motion.div
         initial={{ opacity: 0, y: -16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-        className="dashboard-bg relative w-full mb-6 sm:mb-8 md:mb-10 rounded-2xl overflow-hidden border-2 border-[#EF9B28]/40"
+        className="dashboard-bg relative w-full mb-6 sm:mb-8 md:mb-10 rounded-2xl overflow-hidden py-40"
         style={{ minHeight: "clamp(140px, 25vw, 300px)" }}
       >
         <div className="absolute inset-0 bg-black/50 z-[1]" />
@@ -317,7 +321,7 @@ export default function Dashboard() {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.32, duration: 0.5 }}
-            className="text-white/80 text-xs xs:text-sm sm:text-base md:text-lg max-w-md leading-relaxed"
+            className="text-white/80 text-xs xs:text-sm sm:text-base md:text-3xl  max-w-md md:max-w-fit leading-relaxed"
           >
             You can add projects and assign tasks to your team
           </motion.p>

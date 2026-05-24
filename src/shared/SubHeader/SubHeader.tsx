@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import { BiPlus } from "react-icons/bi";
+import { userContext } from "../../context/userContext";
 
 interface HeaderBarProps {
   title: string;
@@ -7,12 +9,14 @@ interface HeaderBarProps {
 }
 
 const SubHeader = ({ title, buttonLabel, onButtonClick }: HeaderBarProps) => {
+  const { userData } = useContext(userContext) || {};
+  const isManager = userData?.group?.name === "Manager";
   return (
     <div className="bg-white dark:bg-slate-800 flex justify-between items-center py-2 font-montserrat transition-colors duration-200">
       <h2 className="pl-4 sm:pl-6 md:pl-10 py-3 text-[#4F4F4F] dark:text-white font-medium text-xl md:text-[28px] transition-colors duration-200">
         {title}
       </h2>
-      {buttonLabel && onButtonClick && (
+      {isManager && buttonLabel && onButtonClick && (
         <button
           onClick={onButtonClick}
           style={{ whiteSpace: "nowrap" }}

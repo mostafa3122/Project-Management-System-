@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { userContext } from '../../context/userContext';
 import { FiUser, FiMail, FiPhone, FiLock, FiLogOut, FiX } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import ConfirmationModal from '../../pages/Projects/DeleteConfirmationModal/DeleteConfirmation';
 
 
 interface ProfileModalProps {
@@ -12,18 +13,22 @@ interface ProfileModalProps {
 
 export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
   const { userData, setUserToken } = useContext(userContext) || {};
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  
   const navigate = useNavigate();
 
   if (!isOpen) return null;
 
   const handleLogout = () => {
+    setIsLogoutModalOpen(false);
+    onClose();
     if (setUserToken) {
       setUserToken(null);
       toast.success("Logged out successfully");
       navigate("/login");
     }
-    onClose();
   };
+
 
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
@@ -49,35 +54,39 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
         <div
           className="h-24 w-full"
           style={{
-            background: 'repeating-linear-gradient(-45deg, rgba(239, 155, 40, 0.8), rgba(239, 155, 40, 0.8) 10px, rgba(210, 131, 24, 0.8) 10px, rgba(210, 131, 24, 0.8) 20px)'
+            background:
+              "repeating-linear-gradient(-45deg, rgba(239, 155, 40, 0.8), rgba(239, 155, 40, 0.8) 10px, rgba(210, 131, 24, 0.8) 10px, rgba(210, 131, 24, 0.8) 20px)",
           }}
         ></div>
 
         <div className="px-8 pb-8 pt-0 flex flex-col items-center">
-
           <div className="relative -mt-16 mb-3">
             <div className="h-24 w-24 rounded-full border-[6px] border-[#0E382F] bg-[#EF9B28] flex items-center justify-center overflow-hidden shadow-lg">
               {userData?.imagePath ? (
                 <img
-                  src={userData?.imagePath ? `https://upskilling-egypt.com:3003/${userData.imagePath}` : user}
+                  src={
+                    userData?.imagePath
+                      ? `https://upskilling-egypt.com:3003/${userData.imagePath}`
+                      : user
+                  }
                   alt="User Avatar"
                   className="h-full w-full object-cover"
                 />
               ) : (
                 <span className="text-5xl font-bold text-white uppercase">
-                  {userData?.userName?.charAt(0) || 'U'}
+                  {userData?.userName?.charAt(0) || "U"}
                 </span>
               )}
             </div>
           </div>
 
           <h2 className="text-2xl font-bold text-white mb-1">
-            {userData?.userName || 'User Name'}
+            {userData?.userName || "User Name"}
           </h2>
 
           <div className="mb-6 rounded-full border border-[#EF9B28] bg-[#154A3E] px-6 py-1">
             <span className="text-sm font-medium text-[#EF9B28]">
-              {user?.role || user?.group?.name || 'System User'}
+              {user?.role || user?.group?.name || "System User"}
             </span>
           </div>
 
@@ -87,8 +96,12 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
                 <FiUser className="h-5 w-5" />
               </div>
               <div className="flex flex-col">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Username</span>
-                <span className="text-sm font-medium text-white">{userData?.userName || 'N/A'}</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400">
+                  Username
+                </span>
+                <span className="text-sm font-medium text-white">
+                  {userData?.userName || "N/A"}
+                </span>
               </div>
             </div>
 
@@ -97,8 +110,12 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
                 <FiMail className="h-5 w-5" />
               </div>
               <div className="flex flex-col">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Email</span>
-                <span className="text-sm font-medium text-white">{userData?.email || 'N/A'}</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400">
+                  Email
+                </span>
+                <span className="text-sm font-medium text-white">
+                  {userData?.email || "N/A"}
+                </span>
               </div>
             </div>
 
@@ -107,8 +124,12 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
                 <FiPhone className="h-5 w-5" />
               </div>
               <div className="flex flex-col">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400">Phone</span>
-                <span className="text-sm font-medium text-white">{user?.phoneNumber || '+20 100 000 0000'}</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400">
+                  Phone
+                </span>
+                <span className="text-sm font-medium text-white">
+                  {user?.phoneNumber || "+20 100 000 0000"}
+                </span>
               </div>
             </div>
           </div>
@@ -124,16 +145,21 @@ export default function ProfileModal({ isOpen, onClose }: ProfileModalProps) {
               Change Password
             </button>
             <button
-              onClick={handleLogout}
+              onClick={() => setIsLogoutModalOpen(true)}
               className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border border-[#C85D5D] bg-transparent py-3 text-sm font-semibold text-[#C85D5D] transition-all hover:bg-[#C85D5D] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#C85D5D] focus:ring-offset-2 focus:ring-offset-[#0E382F]"
             >
               <FiLogOut className="h-4 w-4" />
               Logout
             </button>
           </div>
-
         </div>
       </div>
+      <ConfirmationModal
+        isOpen={isLogoutModalOpen}
+        onClose={() => setIsLogoutModalOpen(false)}
+        onConfirm={handleLogout}
+        variant="logout"
+      />
     </div>
   );
 }
