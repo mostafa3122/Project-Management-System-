@@ -1,4 +1,4 @@
-import type { Project } from "../../interfaces/project.interface";
+import type { NewProject, Project } from "../../interfaces/project.interface";
 import axiosClient from "./axiosClient";
 
 // GET  projects 
@@ -15,12 +15,12 @@ export const getProjectById = (id: number) => {
 };
 
 // CREATE project
-export const createProject = (data: Project) => {
+export const createProject = (data: NewProject) => {
   return axiosClient.post("/Project", data);
 };
 
 // UPDATE project
-export const updateProject = (id: number | string, data: Project) => {
+export const updateProject = (id: number | string, data: NewProject) => {
   return axiosClient.put(`/Project/${id}`, data);
 };
 
