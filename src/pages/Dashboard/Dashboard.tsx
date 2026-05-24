@@ -216,7 +216,7 @@ export default function Dashboard() {
     : [];
 
   return (
-    <div className="p-6 bg-[#F5F5F5] min-h-screen">
+    <div className="p-6 bg-[#F5F5F5] dark:bg-slate-900 min-h-screen transition-colors duration-200">
 
     {/* ── Welcome Banner ── */}
       <motion.div

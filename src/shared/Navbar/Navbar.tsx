@@ -8,9 +8,12 @@ import { useNavigate } from "react-router-dom";
 import { BiLoaderCircle } from "react-icons/bi";
 import { toast } from "react-toastify";
 import ProfileModal from "../ProfileModal/ProfileModal";
+import { ThemeContext } from "../../context/ThemeContext";
+import { FiSun, FiMoon } from "react-icons/fi";
 
 export default function Navbar() {
   const { userData, setUserToken } = useContext(userContext) || {};
+  const { theme, toggleTheme } = useContext(ThemeContext) || {};
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -47,17 +50,24 @@ const handleLogout = () => {
   // };
 
   return (
-    <nav className="flex items-center justify-between bg-white px-6 py-2 shadow-sm border-b border-gray-100">
+    <nav className="flex items-center justify-between bg-white dark:bg-[#0E382F]/90 px-6 py-2 shadow-sm border-b border-gray-100 dark:border-gray-800 transition-colors duration-200">
       <img src={logo} alt="PMS Logo" className="h-10 w-auto" />
 
       <div className="flex items-center gap-6">
+        <button
+          onClick={toggleTheme}
+          className="flex items-center justify-center p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 text-[#EF9B28] transition-all cursor-pointer focus:outline-none"
+          title={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
+        >
+          {theme === "dark" ? <FiSun className="w-5 h-5" /> : <FiMoon className="w-5 h-5" />}
+        </button>
         <div className="relative cursor-pointer">
           <FaBell className="w-7 h-7 text-[#EF9B28]" />
           <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-[#EF9B28] text-[10px] font-bold text-white border-2 border-white">
             1
           </span>
         </div>
-        <div className="h-10 w-px bg-gray-200"></div>
+        <div className="h-10 w-px bg-gray-200 dark:bg-gray-700"></div>
         <div className="relative inline-block text-left" ref={dropdownRef}>
           <button
             type="button"
@@ -74,12 +84,12 @@ const handleLogout = () => {
               className="h-10 w-10 rounded-full object-cover border border-gray-200"
             />
             <div className="hidden md:flex flex-col text-left">
-              <span className="text-sm font-semibold text-[#003d29]">
+              <span className="text-sm font-semibold text-[#003d29] dark:text-white">
                 {userData?.userName || (
                   <BiLoaderCircle className="animate-spin" />
                 )}
               </span>
-              <span className="text-xs text-gray-500">
+              <span className="text-xs text-gray-500 dark:text-gray-300">
                 {userData?.email || <BiLoaderCircle className="animate-spin" />}
               </span>
             </div>
@@ -90,29 +100,29 @@ const handleLogout = () => {
             />
           </button>
           {isDropdownOpen && (
-            <div className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none overflow-hidden">
+            <div className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white dark:bg-slate-800 shadow-lg ring-1 ring-black ring-opacity-5 dark:ring-white/10 focus:outline-none overflow-hidden text-gray-700 dark:text-gray-200">
               <div className="py-1">
                 <button
                   onClick={() => {
                     setIsDropdownOpen(false);
                     setIsModalOpen(true);
                   }}
-                  className="block px-4 py-2 w-full text-left text-sm text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
+                  className="block px-4 py-2 w-full text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors cursor-pointer"
                 >
                   My Profile
                 </button>
                 <button
                   type="button"
                   onClick={() => navigate("/change-password")}
-                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors cursor-pointer"
                 >
                   Change Password
                 </button>
-                <hr className="my-1 border-gray-200" />
+                <hr className="my-1 border-gray-200 dark:border-gray-700" />
                 <button
                   type="button"
                   onClick={handleLogout}
-                  className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-50 transition-colors font-medium cursor-pointer"
+                  className="block w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors font-medium cursor-pointer"
                 >
                   Logout
                 </button>
