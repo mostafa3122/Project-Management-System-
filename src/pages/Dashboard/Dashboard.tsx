@@ -290,8 +290,9 @@ export default function Dashboard() {
     : [];
 
   return (
-    <div className="p-3 xs:p-4 sm:p-5 md:p-6 lg:p-8 bg-[#F5F5F5] min-h-screen">
-      {/* Welcome Banner */}
+    <div className="p-6 bg-[#F5F5F5] dark:bg-slate-900 min-h-screen transition-colors duration-200">
+
+    {/* ── Welcome Banner ── */}
       <motion.div
         initial={{ opacity: 0, y: -16 }}
         animate={{ opacity: 1, y: 0 }}

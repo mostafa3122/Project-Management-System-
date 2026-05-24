@@ -2,6 +2,8 @@
 
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 body {
   font-family: "Montserrat", sans-serif;
 }
@@ -64,9 +66,131 @@ body {
 }
 
 .custom-head tr th {
-  background: #315951E5 !important;
+  background: #315951 !important;
   color: #fff;
   padding: 19px 16px;
-  border: #315951E5 solid 1px;
+  border: #315951 solid 1px;
   font-size: 14px;
+}
+
+/* Dark mode overrides */
+.dark {
+  background-color: #0f172a;
+  color: #f8fafc;
+}
+
+/* Override utility backgrounds */
+.dark .bg-white {
+  background-color: #1e293b !important;
+}
+
+.dark .bg-gray-200,
+.dark .bg-\[\#F8F9FB\],
+.dark .bg-slate-100 {
+  background-color: #0f172a !important;
+}
+
+/* Text color overrides */
+.dark .text-\[\#4F4F4F\],
+.dark .text-gray-500,
+.dark .text-gray-600,
+.dark .text-gray-700,
+.dark .text-gray-800 {
+  color: #cbd5e1 !important;
+}
+
+.dark .text-black,
+.dark .text-gray-900,
+.dark .text-\[\#003d29\],
+.dark .text-\[\#0E382F\],
+.dark .text-\[\#26385A\] {
+  color: #f8fafc !important;
+}
+
+
+.dark h1,
+.dark h2,
+.dark h3,
+.dark h4,
+.dark h5,
+.dark h6 {
+  color: #f8fafc !important;
+}
+
+
+.dark table {
+  background-color: #1e293b !important;
+  color: #cbd5e1 !important;
+}
+
+.dark .custom-head tr th {
+  background: #153e35 !important;
+  border-color: #334155 !important;
+}
+
+.dark tr.even\:bg-\[\#F8F9FA\],
+.dark tbody tr:nth-child(even) {
+  background-color: #1e293b !important;
+}
+
+.dark tr.odd\:bg-white,
+.dark tbody tr:nth-child(odd) {
+  background-color: #162235 !important;
+}
+
+.dark tbody tr:hover {
+  background-color: #273549 !important;
+}
+
+
+.dark .bg-black\/60,
+.dark .bg-black\/50,
+.dark .bg-black\/20 {
+  background-color: rgba(0, 0, 0, 0.75) !important;
+}
+
+
+.dark input,
+.dark textarea,
+.dark select {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+  border-color: #334155 !important;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #64748b !important;
+}
+
+
+.dark .border,
+.dark .border-gray-100,
+.dark .border-gray-300,
+.dark .border-\[\#26385A40\],
+.dark .border-\[\#ECECEC\],
+.dark .border-t,
+.dark .border-b,
+.dark .border-l,
+.dark .border-r,
+.dark .divide-y > * {
+  border-color: #334155 !important;
+}
+
+
+.dark .absolute.bg-white {
+  background-color: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+.dark .absolute.bg-white button:hover {
+  background-color: #334155 !important;
+}
+
+
+.dark .shadow-sm,
+.dark .shadow-md,
+.dark .shadow-lg,
+.dark .shadow-\[0px_4px_20px_0px_\#0000000D\] {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.4) !important;
 }

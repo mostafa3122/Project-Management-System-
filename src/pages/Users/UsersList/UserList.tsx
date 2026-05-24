@@ -113,8 +113,8 @@ export default function UserList() {
       <SubHeader title="Users" />
 
       <div className="py-6 px-9 bg-gray-200">
-        <div className=" bg-white rounded-lg shadow-[0px_4px_20px_0px_#0000000D] items-center gap-2 ">
-          <div className="filter flex p-4 gap-2 ">
+        <div className=" bg-white rounded-lg shadow-[0px_4px_20px_0px_#0000000D] p-4">
+          <div className="filter flex gap-2 mb-4">
             <div className="search-input relative cursor-pointer w-48">
               <input
                 type="text"
@@ -150,141 +150,247 @@ export default function UserList() {
               />
             </div>
           </div>
-          <table className="table custom-table w-full ">
-            <thead className="custom-head">
-              <tr>
-                <th className="px-6 py-2 font-normal">
-                  <div className="flex items-center gap-3">
-                    <span>User Name</span>
-                    <ChevronsUpDown size={16} strokeWidth={2} />
-                  </div>
-                </th>
-                <th className="px-6 py-2 font-normal">
-                  <div className="flex items-center gap-3">
-                    <span>Image</span>
-                  </div>
-                </th>
-                <th className="px-6 py-2 font-normal">
-                  <div className="flex items-center gap-2">
-                    <span>Status</span>
-                    <ChevronsUpDown size={16} strokeWidth={2} />
-                  </div>
-                </th>
-                <th className="px-6 py-2 font-normal">
-                  <div className="flex items-center gap-2">
-                    <span>Phone Number</span>
-                    <ChevronsUpDown size={16} strokeWidth={2} />
-                  </div>
-                </th>
-                <th className="px-6 py-2 font-normal">
-                  <div className="flex items-center gap-2">
-                    <span>Email</span>
-                    <ChevronsUpDown size={16} strokeWidth={2} />
-                  </div>
-                </th>
-                <th className="px-6 py-2 font-normal">
-                  <div className="flex items-center gap-2">
-                    <span> Date Created</span>
-                    <ChevronsUpDown size={16} strokeWidth={2} />
-                  </div>
-                </th>
-                <th className="px-6 py-2 font-normal text-sm">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100 text-sm text-[#4F4F4F] font-normal">
-              {loading ? (
-                <tr>
-                  <td colSpan={7}>
-                    <Loading />
-                  </td>
-                </tr>
-              ) : filteredUsers.length === 0 ? (
-                <tr>
-                  <td colSpan={7}>
-                    <NoData />
-                  </td>
-                </tr>
-              ) : (
-                filteredUsers.map((user) => (
-                  <tr
-                    key={user.id}
-                    className="odd:bg-white even:bg-[#F8F9FA] hover:bg-gray-100/70 transition-colors"
-                  >
-                    <td className="p-4">{user.userName}</td>
-                    <td className="p-4">
-                      {user?.imagePath ? (
-                        <img
-                          src={`https://upskilling-egypt.com:3003/${user?.imagePath}`}
-                          alt={user?.userName}
-                          className=" w-14 h-14 rounded-2xl object-cover  "
-                        />
-                      ) : (
-                        <img
-                          className=" object-fit-cover w-14 h-14 rounded-2xl object-cover"
-                          src={noUser}
-                          alt={user?.userName}
-                        />
-                      )}
-                    </td>
-                    <td className="p-4">
-                      {user.isActivated ? (
-                        <span className="bg-[#009247] text-white text-[12px] rounded-3xl py-1.5 px-3.5 active-label">
-                          Active
-                        </span>
-                      ) : (
-                        <span className=" bg-[#922E25B2] text-white text-[12px] rounded-3xl py-1.5 px-3.5 deactive-label">
-                          Not Active
-                        </span>
-                      )}
-                    </td>
-                    <td className="p-4">{user.phoneNumber}</td>
-                    <td className="p-4">{user.email}</td>
-                    <td className="p-4">
-                      {new Date(user.creationDate).toLocaleDateString("en-GB")}
-                    </td>
-                    <td className="p-4">
-                      <div className="relative inline-block group">
-                        <button className="rounded-full cursor-pointer p-2 hover:bg-gray-100">
-                          <MoreVertical size={20} />
-                        </button>
+          {/* Desktop Table View */}
+          <div className="hidden md:block">
+            <div className="overflow-auto max-h-[400px] w-full">
+              <table className="table custom-table w-full min-w-[800px]">
+                <thead className="custom-head">
+                  <tr>
+                    <th className="px-6 py-2 font-normal">
+                      <div className="flex items-center gap-3">
+                        <span>User Name</span>
+                        <ChevronsUpDown size={16} strokeWidth={2} />
+                      </div>
+                    </th>
+                    <th className="px-6 py-2 font-normal">
+                      <div className="flex items-center gap-3">
+                        <span>Image</span>
+                      </div>
+                    </th>
+                    <th className="px-6 py-2 font-normal">
+                      <div className="flex items-center gap-2">
+                        <span>Status</span>
+                        <ChevronsUpDown size={16} strokeWidth={2} />
+                      </div>
+                    </th>
+                    <th className="px-6 py-2 font-normal">
+                      <div className="flex items-center gap-2">
+                        <span>Phone Number</span>
+                        <ChevronsUpDown size={16} strokeWidth={2} />
+                      </div>
+                    </th>
+                    <th className="px-6 py-2 font-normal">
+                      <div className="flex items-center gap-2">
+                        <span>Email</span>
+                        <ChevronsUpDown size={16} strokeWidth={2} />
+                      </div>
+                    </th>
+                    <th className="px-6 py-2 font-normal">
+                      <div className="flex items-center gap-2">
+                        <span> Date Created</span>
+                        <ChevronsUpDown size={16} strokeWidth={2} />
+                      </div>
+                    </th>
+                    <th className="px-6 py-2 font-normal text-sm">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100 text-sm text-[#4F4F4F] font-normal">
+                  {loading ? (
+                    <tr>
+                      <td colSpan={7}>
+                        <Loading />
+                      </td>
+                    </tr>
+                  ) : filteredUsers.length === 0 ? (
+                    <tr>
+                      <td colSpan={7}>
+                        <NoData />
+                      </td>
+                    </tr>
+                  ) : (
+                    filteredUsers.map((user) => (
+                      <tr
+                        key={user.id}
+                        className="odd:bg-white even:bg-[#F8F9FA] hover:bg-gray-100/70 transition-colors"
+                      >
+                        <td className="p-4">{user.userName}</td>
+                        <td className="p-4">
+                          {user?.imagePath ? (
+                            <img
+                              src={`https://upskilling-egypt.com:3003/${user?.imagePath}`}
+                              alt={user?.userName}
+                              className=" w-14 h-14 rounded-2xl object-cover  "
+                            />
+                          ) : (
+                            <img
+                              className=" object-fit-cover w-14 h-14 rounded-2xl object-cover"
+                              src={noUser}
+                              alt={user?.userName}
+                            />
+                          )}
+                        </td>
+                        <td className="p-4">
+                          {user.isActivated ? (
+                            <span className="bg-[#009247] text-white text-[12px] rounded-3xl py-1.5 px-3.5 active-label">
+                              Active
+                            </span>
+                          ) : (
+                            <span className=" bg-[#922E25B2] text-white text-[12px] rounded-3xl py-1.5 px-3.5 deactive-label">
+                              Not Active
+                            </span>
+                          )}
+                        </td>
+                        <td className="p-4">{user.phoneNumber}</td>
+                        <td className="p-4">{user.email}</td>
+                        <td className="p-4">
+                          {new Date(user.creationDate).toLocaleDateString("en-GB")}
+                        </td>
+                        <td className="p-4">
+                          <div className="relative inline-block group">
+                            <button className="rounded-full cursor-pointer p-2 hover:bg-gray-100">
+                              <MoreVertical size={20} />
+                            </button>
 
-                        {/* dropdown */}
-                        <div className="invisible absolute z-10 right-0 top-10 w-32 rounded-lg overflow-hidden bg-white shadow-md opacity-0 transition-all duration-200 group-focus-within:visible group-focus-within:opacity-100">
-                          <button
-                            onClick={() => {
-                              setSelectedUser2(user);
-                              setConfirmOpen(true);
-                            }}
-                            className=" cursor-pointer block w-full px-4 text-red-500 py-2 text-left hover:bg-gray-100"
-                          >
-                            {user.isActivated ? "Block" : "Unblock"}
-                          </button>
+                            {/* dropdown */}
+                            <div className="invisible absolute z-10 right-0 top-10 w-32 rounded-lg overflow-hidden bg-white shadow-md opacity-0 transition-all duration-200 group-focus-within:visible group-focus-within:opacity-100">
+                              <button
+                                onClick={() => {
+                                  setSelectedUser2(user);
+                                  setConfirmOpen(true);
+                                }}
+                                className=" cursor-pointer block w-full px-4 text-red-500 py-2 text-left hover:bg-gray-100"
+                              >
+                                {user.isActivated ? "Block" : "Unblock"}
+                              </button>
 
-                          <button
-                            onClick={() => {
-                              setSelectedUser(user);
-                              setOpenModal(true);
-                            }}
-                            className=" cursor-pointer  flex items-center gap-2 text-green-400 w-full px-4 py-2 text-left hover:bg-gray-100"
-                          >
-                            <Eye size={20} /> view
-                          </button>
+                              <button
+                                onClick={() => {
+                                  setSelectedUser(user);
+                                  setOpenModal(true);
+                                }}
+                                className=" cursor-pointer  flex items-center gap-2 text-green-400 w-full px-4 py-2 text-left hover:bg-gray-100"
+                              >
+                                <Eye size={20} /> view
+                              </button>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Mobile Card Grid View */}
+          <div className="block md:hidden space-y-4">
+            {loading ? (
+              <div className="py-6">
+                <Loading />
+              </div>
+            ) : filteredUsers.length === 0 ? (
+              <div className="py-6">
+                <NoData />
+              </div>
+            ) : (
+              filteredUsers.map((user) => (
+                <div
+                  key={user.id}
+                  className="bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 rounded-2xl p-4 shadow-sm transition-all hover:shadow-md"
+                >
+                  {/* Card Header */}
+                  <div className="flex items-center justify-between pb-3 border-b border-gray-100 dark:border-slate-700 mb-3">
+                    <div className="flex items-center gap-3">
+                      {/* Avatar */}
+                      <div className="w-10 h-10 rounded-xl overflow-hidden shrink-0 border border-gray-100 dark:border-slate-700 bg-gray-50 dark:bg-slate-800">
+                        <img
+                          src={
+                            user?.imagePath
+                              ? `https://upskilling-egypt.com:3003/${user?.imagePath}`
+                              : noUser
+                          }
+                          alt={user?.userName}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-gray-800 dark:text-white text-sm">
+                          {user.userName}
+                        </h3>
+                        <div className="mt-0.5">
+                          {user.isActivated ? (
+                            <span className="bg-[#009247] text-white text-[10px] rounded-full py-0.5 px-2 font-medium">
+                              Active
+                            </span>
+                          ) : (
+                            <span className="bg-[#922E25B2] text-white text-[10px] rounded-full py-0.5 px-2 font-medium">
+                              Not Active
+                            </span>
+                          )}
                         </div>
                       </div>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+                    </div>
+
+                    {/* Actions */}
+                    <div className="flex items-center gap-1.5">
+                      <button
+                        onClick={() => {
+                          setSelectedUser(user);
+                          setOpenModal(true);
+                        }}
+                        className="text-[#0E382F] dark:text-[#EF9B28] hover:bg-[#0E382F]/10 dark:hover:bg-[#EF9B28]/10 p-2 rounded-full transition-colors cursor-pointer"
+                        title="View"
+                      >
+                        <Eye size={18} />
+                      </button>
+                      <button
+                        onClick={() => {
+                          setSelectedUser2(user);
+                          setConfirmOpen(true);
+                        }}
+                        className={`text-[10px] uppercase tracking-wider px-2.5 py-1.5 rounded-lg font-bold transition-all cursor-pointer ${user.isActivated
+                          ? "bg-red-50 text-red-600 hover:bg-red-100 dark:bg-red-950/20 dark:text-red-400"
+                          : "bg-green-50 text-green-600 hover:bg-green-100 dark:bg-green-950/20 dark:text-green-400"
+                          }`}
+                      >
+                        {user.isActivated ? "Block" : "Unblock"}
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Card Body */}
+                  <div className="space-y-2 text-sm text-[#4F4F4F] dark:text-gray-300">
+                    <div className="flex flex-col">
+                      <span className="text-[10px] uppercase text-gray-400 font-semibold tracking-wider">Email</span>
+                      <span className="mt-0.5 font-medium text-gray-800 dark:text-white break-all">{user.email}</span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3 pt-1">
+                      <div className="flex flex-col">
+                        <span className="text-[10px] uppercase text-gray-400 font-semibold tracking-wider">Phone</span>
+                        <span className="mt-0.5 font-medium text-gray-800 dark:text-white">{user.phoneNumber || "N/A"}</span>
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-[10px] uppercase text-gray-400 font-semibold tracking-wider">Created</span>
+                        <span className="mt-0.5 font-medium text-xs text-gray-800 dark:text-white">
+                          {new Date(user.creationDate).toLocaleDateString("en-GB")}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+
+          <Pagination
+            pageNumber={pageNumber}
+            pageSize={pageSize}
+            totalRecords={totalRecords}
+            onPageChange={setPageNumber}
+            onPageSizeChange={setPageSize}
+          />
         </div>
-        <Pagination
-          pageNumber={pageNumber}
-          pageSize={pageSize}
-          totalRecords={totalRecords}
-          onPageChange={setPageNumber}
-          onPageSizeChange={setPageSize}
-        />
       </div>
       {openModal && selectedUser && (
         <div
