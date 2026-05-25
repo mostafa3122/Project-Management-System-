@@ -29,7 +29,6 @@ export default function UserList() {
   const [selectedUser, setSelectedUser] = useState(null);
   // confirm block
   const [confirmOpen, setConfirmOpen] = useState(false);
-  // const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
   const [selectedUser2, setSelectedUser2] = useState<UserType | null>(null);
   // filter  & search
   const [statusFilter, setStatusFilter] = useState("all");
@@ -41,16 +40,14 @@ export default function UserList() {
       statusFilter === "active"
         ? user.isActivated === true
         : statusFilter === "inactive"
-          ? user.isActivated === false
-          : true;
+        ? user.isActivated === false
+        : true;
     return matchStatus;
   });
-
 
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [totalRecords, setTotalRecords] = useState(0);
-
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -61,7 +58,6 @@ export default function UserList() {
       clearTimeout(timer);
     };
   }, [searchInput]);
-
 
   const getUsers = async () => {
     try {
@@ -86,11 +82,11 @@ export default function UserList() {
       setToggleLoading(true);
       await ToggleStatusApi(id);
 
-      const user = usersList.find((u: any) => u.id === id);
+      const user = usersList.find((u) => u.id === id);
       const isCurrentlyActivated = user?.isActivated;
 
-      setUsersList((prev: any) =>
-        prev.map((user: any) =>
+      setUsersList((prev) =>
+        prev.map((user) =>
           user.id === id ? { ...user, isActivated: !user.isActivated } : user
         )
       );
@@ -98,8 +94,11 @@ export default function UserList() {
       toast.success(
         `User ${isCurrentlyActivated ? "blocked" : "unblocked"} successfully!`
       );
-    } catch (error: any) {
-      toast.error(error?.response?.data?.message || "Failed to update status");
+    } catch (error) {
+       const axiosError = error as AxiosError<IUsersResponse>;
+       toast.error(
+         axiosError.response?.data?.message || "Failed to update status"
+       );
     } finally {
       setToggleLoading(false);
     }
@@ -113,9 +112,9 @@ export default function UserList() {
       <SubHeader title="Users" />
 
       <div className="py-6 px-9 bg-gray-200">
-        <div className=" bg-white rounded-lg shadow-[0px_4px_20px_0px_#0000000D] p-4">
-          <div className="filter flex gap-2 mb-4">
-            <div className="search-input relative cursor-pointer w-48">
+        <div className=" bg-white rounded-lg shadow-[0px_4px_20px_0px_#0000000D] ">
+          <div className="filter flex gap-2 p-4">
+            <div className="search-input relative w-48">
               <input
                 type="text"
                 placeholder="Search Users"
@@ -243,7 +242,9 @@ export default function UserList() {
                         <td className="p-4">{user.phoneNumber}</td>
                         <td className="p-4">{user.email}</td>
                         <td className="p-4">
-                          {new Date(user.creationDate).toLocaleDateString("en-GB")}
+                          {new Date(user.creationDate).toLocaleDateString(
+                            "en-GB"
+                          )}
                         </td>
                         <td className="p-4">
                           <div className="relative inline-block group">
@@ -349,10 +350,11 @@ export default function UserList() {
                           setSelectedUser2(user);
                           setConfirmOpen(true);
                         }}
-                        className={`text-[10px] uppercase tracking-wider px-2.5 py-1.5 rounded-lg font-bold transition-all cursor-pointer ${user.isActivated
-                          ? "bg-red-50 text-red-600 hover:bg-red-100 dark:bg-red-950/20 dark:text-red-400"
-                          : "bg-green-50 text-green-600 hover:bg-green-100 dark:bg-green-950/20 dark:text-green-400"
-                          }`}
+                        className={`text-[10px] uppercase tracking-wider px-2.5 py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
+                          user.isActivated
+                            ? "bg-red-50 text-red-600 hover:bg-red-100 dark:bg-red-950/20 dark:text-red-400"
+                            : "bg-green-50 text-green-600 hover:bg-green-100 dark:bg-green-950/20 dark:text-green-400"
+                        }`}
                       >
                         {user.isActivated ? "Block" : "Unblock"}
                       </button>
@@ -362,18 +364,30 @@ export default function UserList() {
                   {/* Card Body */}
                   <div className="space-y-2 text-sm text-[#4F4F4F] dark:text-gray-300">
                     <div className="flex flex-col">
-                      <span className="text-[10px] uppercase text-gray-400 font-semibold tracking-wider">Email</span>
-                      <span className="mt-0.5 font-medium text-gray-800 dark:text-white break-all">{user.email}</span>
+                      <span className="text-[10px] uppercase text-gray-400 font-semibold tracking-wider">
+                        Email
+                      </span>
+                      <span className="mt-0.5 font-medium text-gray-800 dark:text-white break-all">
+                        {user.email}
+                      </span>
                     </div>
                     <div className="grid grid-cols-2 gap-3 pt-1">
                       <div className="flex flex-col">
-                        <span className="text-[10px] uppercase text-gray-400 font-semibold tracking-wider">Phone</span>
-                        <span className="mt-0.5 font-medium text-gray-800 dark:text-white">{user.phoneNumber || "N/A"}</span>
+                        <span className="text-[10px] uppercase text-gray-400 font-semibold tracking-wider">
+                          Phone
+                        </span>
+                        <span className="mt-0.5 font-medium text-gray-800 dark:text-white">
+                          {user.phoneNumber || "N/A"}
+                        </span>
                       </div>
                       <div className="flex flex-col">
-                        <span className="text-[10px] uppercase text-gray-400 font-semibold tracking-wider">Created</span>
+                        <span className="text-[10px] uppercase text-gray-400 font-semibold tracking-wider">
+                          Created
+                        </span>
                         <span className="mt-0.5 font-medium text-xs text-gray-800 dark:text-white">
-                          {new Date(user.creationDate).toLocaleDateString("en-GB")}
+                          {new Date(user.creationDate).toLocaleDateString(
+                            "en-GB"
+                          )}
                         </span>
                       </div>
                     </div>
@@ -382,14 +396,15 @@ export default function UserList() {
               ))
             )}
           </div>
-
-          <Pagination
-            pageNumber={pageNumber}
-            pageSize={pageSize}
-            totalRecords={totalRecords}
-            onPageChange={setPageNumber}
-            onPageSizeChange={setPageSize}
-          />
+          {totalRecords > pageSize && (
+            <Pagination
+              pageNumber={pageNumber}
+              pageSize={pageSize}
+              totalRecords={totalRecords}
+              onPageChange={setPageNumber}
+              onPageSizeChange={setPageSize}
+            />
+          )}
         </div>
       </div>
       {openModal && selectedUser && (
@@ -521,8 +536,9 @@ export default function UserList() {
         isOpen={confirmOpen}
         loading={toggleLoading}
         title={selectedUser2?.isActivated ? "Block User" : "Unblock User"}
-        message={`Are you sure you want to ${selectedUser2?.isActivated ? "block" : "unblock"
-          } "${selectedUser2?.userName}"?`}
+        message={`Are you sure you want to ${
+          selectedUser2?.isActivated ? "block" : "unblock"
+        } "${selectedUser2?.userName}"?`}
         confirmLabel={selectedUser2?.isActivated ? "Block" : "Unblock"}
         onClose={() => setConfirmOpen(false)}
         onConfirm={async () => {
