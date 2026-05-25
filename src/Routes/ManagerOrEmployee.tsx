@@ -12,18 +12,19 @@ const ManagerOrEmployee = ({ children }: { children: React.ReactNode }) => {
 
   const role = userData.group?.name;
 
-  const path = pathname
-    .replace("/dashboard/", "") 
-    .split("/")[0]; 
+ const path = pathname.replace("/dashboard/", "");
+
+ 
 
   const accessMap: Record<string, string[]> = {
     Manager: ["users", "projects", "tasks"],
-    Employee: ["projects", "tasks"],
+      Employee: ["projects","tasks/task-board", ],
+
   };
 
   const allowedRoutes = accessMap[role || ""] || [];
 
-  if (!allowedRoutes.includes(path)) {
+  if(!allowedRoutes.some((route) => path.startsWith(route))) {
     return <Navigate to="/no-data" replace />;
   }
 
