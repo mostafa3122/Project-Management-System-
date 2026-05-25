@@ -17,6 +17,7 @@ import TaskData from "../pages/Task/TaskData/TaskData";
 import ProjectList from "../pages/Projects/ProjectList/ProjectList";
 import ProjectForm from "../pages/Projects/ProjectForm/ProjectForm";
 import ManagerOrEmployee from "./ManagerOrEmployee";
+import MyTasks from "../pages/Task/task-board/MyTasks";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -128,6 +129,14 @@ const routes = createBrowserRouter([
           </ManagerOrEmployee>
         ),
       },
+      {
+  path: "tasks/task-board",
+  element: (
+    <ManagerOrEmployee>
+      <MyTasks />
+    </ManagerOrEmployee>
+  ),
+},
     ],
   },
   { path: "welcome", element: <WelcomeComponent /> },

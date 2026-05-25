@@ -120,9 +120,13 @@ export default function Sidebar({ onClose }: SidebarProps) {
   const { userData } = useContext(userContext) || {};
   const isEmployee = userData?.group?.name === "Employee";
 
-  const visibleNavItems = isEmployee
-    ? NAV_ITEMS.filter((item) => item.label !== "Users")
-    : NAV_ITEMS;
+ const visibleNavItems = isEmployee
+  ? [
+      { label: "Home", to: "/dashboard", icon: <IconHome /> },
+      { label: "Projects", to: "/dashboard/projects", icon: <IconProjects /> },
+      { label: "My Tasks", to: "/dashboard/tasks/task-board", icon: <IconTasks /> },
+    ]
+  : NAV_ITEMS;
 
   const showLabels = isMobile || expanded;
 

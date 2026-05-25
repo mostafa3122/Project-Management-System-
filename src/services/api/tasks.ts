@@ -9,6 +9,14 @@ export const GetAllTasks = (params?: {
 }) => {
   return axiosClient.get("/Task/manager", { params });
 };
+export const GetMyTasks = (params?: {
+  pageSize?: number;
+  pageNumber?: number;
+  title?: string;
+  status?: string;
+}) => {
+  return axiosClient.get("/Task", { params });
+};
 
 export const DeleteTask = (taskId: string| number) => {
   return axiosClient.delete(`/Task/${taskId}`);
