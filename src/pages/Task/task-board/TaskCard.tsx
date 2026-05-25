@@ -1,6 +1,5 @@
 import { useDraggable } from "@dnd-kit/core";
 import { motion } from "framer-motion";
-import { BiEdit } from "react-icons/bi";
 import { FiCalendar } from "react-icons/fi";
 import type { ITask } from "../../../interfaces/task.interface";
 
