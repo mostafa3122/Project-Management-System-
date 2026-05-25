@@ -1,4 +1,5 @@
 import { useDroppable } from "@dnd-kit/core";
+import { motion } from "framer-motion";
 import TaskCard from "./TaskCard";
 import type {
   ITask,
@@ -11,26 +12,36 @@ type Props = {
 };
 
 export default function Column({ coulmn, tasks }: Props) {
-  const { setNodeRef } = useDroppable({
+  const { setNodeRef, isOver } = useDroppable({
     id: coulmn.id,
   });
 
   return (
     <div className="flex flex-col flex-1">
-      <h4 className="text-gray-600 font-semibold mb-5 text-2xl">
+      <h4 className="text-gray-600 dark:text-gray-300 font-semibold mb-3 text-2xl">
         {coulmn.title}
       </h4>
 
-      <div
-        className="flex flex-col rounded-lg p-4"
-        style={{ backgroundColor: "#2D6A5E" }}
+      <motion.div
+        animate={{
+          backgroundColor: isOver ? "#25594e" : "#2D6A5E",
+        }}
+        transition={{ duration: 0.2 }}
+        className="flex flex-col rounded-xl p-4"
       >
-        <div className="flex flex-col gap-3 min-h-64 w-full" ref={setNodeRef}>
-          {tasks.map((task) => (
-            <TaskCard key={task.id} task={task} />
+        <div ref={setNodeRef} className="flex flex-col gap-3 min-h-80 w-full">
+          {tasks.map((task, i) => (
+            <motion.div
+              key={task.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.25, delay: i * 0.05, ease: "easeOut" }}
+            >
+              <TaskCard task={task} />
+            </motion.div>
           ))}
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
