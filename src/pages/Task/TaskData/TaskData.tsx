@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FiChevronLeft } from "react-icons/fi";
 import { useNavigate, useParams } from "react-router-dom";
+import type { AxiosError } from "axios";
 import type { ITask } from "../../../interfaces/task.interface";
 import { toast } from "react-toastify";
 import {
@@ -56,12 +57,9 @@ export default function TaskData() {
         toast.success("Task created successfully!");
       }
       navigate("/dashboard/tasks");
-    } catch (error: any) {
-      const errorMsg =
-        error.response?.data?.message ||
-        error.message ||
-        "Failed to save task.";
-      toast.error(errorMsg);
+    } catch (error) {
+      const axiosError = error as AxiosError<any>;
+      toast.error(axiosError.response?.data?.message || "something went wrong");
     } finally {
       setSubmitting(false);
     }
@@ -102,11 +100,15 @@ export default function TaskData() {
             projectId: task.project?.id || "",
           });
         }
-
         setProjectsList(projects);
         setUsersList(employees);
       } catch (error) {
-        toast.error("Failed to load task details.");
+        const axiosError = error as AxiosError<any>;
+        toast.error(
+          axiosError.response?.data?.message ||
+          axiosError.message ||
+          "Failed to load task details."
+        );
       } finally {
         setLoading(false);
       }
@@ -180,54 +182,61 @@ export default function TaskData() {
               )}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              <div className="flex flex-col relative">
-                <label className="text-sm font-semibold text-[#4F4F4F] mb-1.5">
-                  User
-                </label>
-                <select
-                  className="w-full px-4 py-2.5 rounded-2xl border border-[#ECECEC] text-sm text-black focus:outline-none focus:border-[#315951] bg-white cursor-pointer"
-                  {...register("employeeId", {
-                    required: "Assignee is required",
-                  })}
-                >
-                  <option value="">No Users Selected</option>
-                  {usersList.map((user) => (
-                    <option key={user.id} value={user.id}>
-                      {user.userName}
-                    </option>
-                  ))}
-                </select>
-                {errors.employeeId && (
-                  <span className="text-red-500 text-xs mt-1 font-montserrat">
-                    {errors.employeeId.message}
-                  </span>
-                )}
+            {isEditMode ? (
+              <>
+                <input type="hidden" {...register("employeeId")} />
+                <input type="hidden" {...register("projectId")} />
+              </>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div className="flex flex-col relative">
+                  <label className="text-sm font-semibold text-[#4F4F4F] mb-1.5">
+                    User
+                  </label>
+                  <select
+                    className="w-full px-4 py-2.5 rounded-2xl border border-[#ECECEC] text-sm text-black focus:outline-none focus:border-[#315951] bg-white cursor-pointer"
+                    {...register("employeeId", {
+                      required: "Assignee is required",
+                    })}
+                  >
+                    <option value="">No Users Selected</option>
+                    {usersList.map((user) => (
+                      <option key={user.id} value={user.id}>
+                        {user.userName}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.employeeId && (
+                    <span className="text-red-500 text-xs mt-1 font-montserrat">
+                      {errors.employeeId.message}
+                    </span>
+                  )}
+                </div>
+                <div className="flex flex-col relative">
+                  <label className="text-sm font-semibold text-[#4F4F4F] mb-1.5">
+                    Project
+                  </label>
+                  <select
+                    className="w-full px-4 py-2.5 rounded-2xl border border-[#ECECEC] text-sm text-black focus:outline-none focus:border-[#315951] bg-white cursor-pointer"
+                    {...register("projectId", {
+                      required: "Project is required",
+                    })}
+                  >
+                    <option value="">No Status Selected</option>
+                    {projectsList.map((project) => (
+                      <option key={project.id} value={project.id}>
+                        {project.title || project.projectName}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.projectId && (
+                    <span className="text-red-500 text-xs mt-1 font-montserrat">
+                      {errors.projectId.message}
+                    </span>
+                  )}
+                </div>
               </div>
-              <div className="flex flex-col relative">
-                <label className="text-sm font-semibold text-[#4F4F4F] mb-1.5">
-                  Project
-                </label>
-                <select
-                  className="w-full px-4 py-2.5 rounded-2xl border border-[#ECECEC] text-sm text-black focus:outline-none focus:border-[#315951] bg-white cursor-pointer"
-                  {...register("projectId", {
-                    required: "Project is required",
-                  })}
-                >
-                  <option value="">No Status Selected</option>
-                  {projectsList.map((project) => (
-                    <option key={project.id} value={project.id}>
-                      {project.title || project.projectName}
-                    </option>
-                  ))}
-                </select>
-                {errors.projectId && (
-                  <span className="text-red-500 text-xs mt-1 font-montserrat">
-                    {errors.projectId.message}
-                  </span>
-                )}
-              </div>
-            </div>
+            )}
 
             <div className="border-t border-[#F1F5F9] pt-4 flex justify-between items-center">
               <button

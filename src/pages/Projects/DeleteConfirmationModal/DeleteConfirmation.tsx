@@ -1,4 +1,4 @@
-// ConfirmationModal.tsx
+
 import { BiTrash, BiLogOut, BiBlock } from "react-icons/bi";
 import type { ReactNode } from "react";
 

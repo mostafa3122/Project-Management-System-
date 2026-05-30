@@ -8,6 +8,8 @@ import axiosClient from "../../../services/api/axiosClient";
 import { useNavigate } from "react-router-dom";
 import { forgetPasswordSchema } from "../../../schema/auth.schema";
 import AuthButton from "../../../components/AuthButton";
+import type { AxiosError } from "axios";
+import type { IUsersResponse } from "../../../interfaces/users.interface";
 
 export default function ForgetPassword() {
   const navigate = useNavigate();
@@ -27,8 +29,9 @@ export default function ForgetPassword() {
       });
       toast.success(response.data.message || "OTP sent to your email!");
       navigate("/reset-password");
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || "Something went wrong");
+    } catch (error) {
+      const axiosError = error as AxiosError<IUsersResponse>;
+      toast.error(axiosError.response?.data?.message || "something went wrong");
     }
   };
 

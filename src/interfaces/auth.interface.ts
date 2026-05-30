@@ -12,7 +12,6 @@ export interface IRegisterData {
   profileImage?: FileList;
   password: string;
   confirmPassword: string;
-  // error:string;
 }
 /* Forget Pass Interface */
 export interface IForgetPasswordData {

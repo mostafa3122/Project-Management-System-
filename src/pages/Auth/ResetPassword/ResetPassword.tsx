@@ -1,13 +1,15 @@
-import InputField from "../../../shared/InputField/InputField";
-import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type z from "zod";
+import type { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
-import { resetPasswordSchema } from "../../../schema/auth.schema";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { resetInputs } from "./reset.inputs";
+import type z from "zod";
 import AuthButton from "../../../components/AuthButton";
+import type { IUsersResponse } from "../../../interfaces/users.interface";
+import { resetPasswordSchema } from "../../../schema/auth.schema";
 import { ResetApi } from "../../../services/api/auth";
+import InputField from "../../../shared/InputField/InputField";
+import { resetInputs } from "./reset.inputs";
 
 export default function ResetPassword() {
   const navigate = useNavigate();
@@ -30,8 +32,9 @@ export default function ResetPassword() {
       });
       toast.success(response.data.message || "Password reset successfully!");
       navigate("/login");
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || "Something went wrong");
+    } catch (error) {
+      const axiosError = error as AxiosError<IUsersResponse>;
+      toast.error(axiosError.response?.data?.message || "Something went wrong");
     }
   };
 

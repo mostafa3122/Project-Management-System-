@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import type z from "zod";
 import AuthButton from "../../../components/AuthButton";
 import { userContext } from "../../../context/userContext";
+import type { IUsersResponse } from "../../../interfaces/users.interface";
 import { loginSchema } from "../../../schema/auth.schema";
 import { LoginApi } from "../../../services/api/auth";
 import InputField from "../../../shared/InputField/InputField";
@@ -37,12 +38,9 @@ export default function Login() {
       }
       toast.success(response.data.message || "Login successfully!");
       navigate("/welcome");
-    } catch (error: unknown) {
-      if (error instanceof AxiosError) {
-        toast.error(error.response?.data?.message || "Something went wrong");
-      } else {
-        toast.error("Unexpected error");
-      }
+    } catch (error) {
+      const axiosError = error as AxiosError<IUsersResponse>;
+      toast.error(axiosError.response?.data?.message || "something went wrong");
     }
   };
 

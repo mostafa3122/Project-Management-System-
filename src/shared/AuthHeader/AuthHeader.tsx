@@ -6,7 +6,6 @@ export default function AuthHeader({ title }) {
         {title}
         <span className="w-4 ml-0.5 h-1 bg-[#EF9B28]"></span>
       </h2>
-
     </div>
   );
 }

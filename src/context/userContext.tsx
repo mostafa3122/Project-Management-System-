@@ -1,12 +1,14 @@
 import { createContext, useEffect, useState } from "react";
-// Import your axios client
-import axiosClient from "../services/api/axiosClient"; 
+import axiosClient from "../services/api/axiosClient";
 
 interface UserData {
   id?: string;
   userName?: string;
   email?: string;
   imagePath?: string;
+  group?: {
+    name: string;
+  };
 }
 
 interface UserContextType {
@@ -17,33 +19,34 @@ interface UserContextType {
 
 export const userContext = createContext<UserContextType | null>(null);
 
-export default function UserContextProvider({ children }: { children: React.ReactNode }) {
+export default function UserContextProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [userToken, setUserToken] = useState<string | null>(null);
   const [userData, setUserData] = useState<UserData | null>(null);
 
-  
   const getCurrentUser = async () => {
     try {
-      const response = await axiosClient.get("/Users/currentUser"); 
-      setUserData(response.data); 
+      const response = await axiosClient.get("/Users/currentUser");
+      setUserData(response.data);
     } catch (error) {
       console.error("Failed to fetch user data:", error);
     }
   };
-
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       setUserToken(token);
     }
-  }, []); 
+  }, []);
 
-  
   useEffect(() => {
     if (userToken) {
       localStorage.setItem("token", userToken);
-      getCurrentUser(); 
+      getCurrentUser();
     } else {
       setUserData(null);
       localStorage.removeItem("token");

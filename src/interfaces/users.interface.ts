@@ -14,6 +14,7 @@ export interface UserType {
   imagePath: string;
   isActivated: boolean;
   creationDate: string;
+  group: IUserGroup;
 }
 export interface IUser {
   id: number;
@@ -26,6 +27,7 @@ export interface IUser {
   group: IUserGroup;
   creationDate: string;
   modificationDate: string;
+  
 }
 export interface IUsersResponse {
   message: string;

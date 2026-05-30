@@ -19,7 +19,7 @@ export default function Pagination({
   const totalPages = Math.ceil(totalRecords / pageSize) || 1;
 
   return (
-    <div className="flex justify-end items-center gap-6 text-sm text-[#4F4F4F] font-montserrat my-5 pt-5">
+    <div className="flex flex-wrap justify-center sm:justify-end items-center gap-4 sm:gap-6 text-sm text-[#4F4F4F] dark:text-gray-300 font-montserrat my-5 pt-5 w-full">
       <div className="flex items-center gap-2">
         <span className="font-normal">Showing</span>
         <div className="relative flex items-center">
@@ -29,7 +29,7 @@ export default function Pagination({
               onPageSizeChange(Number(e.target.value));
               onPageChange(1);
             }}
-            className="appearance-none pl-3 pr-8 py-1.5 border border-[#26385A40] rounded-lg bg-white text-[#4F4F4F] font-normal focus:outline-none cursor-pointer text-sm"
+            className="appearance-none pl-3 pr-8 py-1.5 border border-[#26385A40] dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-[#4F4F4F] dark:text-gray-200 font-normal focus:outline-none cursor-pointer text-sm transition-colors"
           >
             <option value={5}>5</option>
             <option value={10}>10</option>
@@ -39,7 +39,7 @@ export default function Pagination({
             <option value={50}>50</option>
           </select>
           <span className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none">
-            <MdOutlineArrowDropDown size={16} className="text-gray-500" />
+            <MdOutlineArrowDropDown size={16} className="text-gray-500 dark:text-gray-400" />
           </span>
         </div>
         <span className="font-normal pl-1">of {totalRecords} Results</span>
@@ -53,14 +53,14 @@ export default function Pagination({
         <button
           disabled={pageNumber === 1}
           onClick={() => onPageChange(pageNumber - 1)}
-          className="text-black/90 hover:text-gray-700 disabled:opacity-30 disabled:cursor-not-allowed p-1 transition-colors cursor-pointer"
+          className="text-black/90 dark:text-white/90 hover:text-gray-700 dark:hover:text-gray-300 disabled:opacity-30 disabled:cursor-not-allowed p-1 transition-colors cursor-pointer"
         >
           <GoChevronLeft size={20} />
         </button>
         <button
           disabled={pageNumber * pageSize >= totalRecords}
           onClick={() => onPageChange(pageNumber + 1)}
-          className="text-black hover:text-gray-700 disabled:opacity-30 disabled:cursor-not-allowed p-1 transition-colors cursor-pointer"
+          className="text-black dark:text-white hover:text-gray-700 dark:hover:text-gray-300 disabled:opacity-30 disabled:cursor-not-allowed p-1 transition-colors cursor-pointer"
         >
           <GoChevronRight size={20} />
         </button>

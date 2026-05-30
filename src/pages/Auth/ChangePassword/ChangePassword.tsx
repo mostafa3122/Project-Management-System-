@@ -1,4 +1,3 @@
-
 import InputField from "../../../shared/InputField/InputField";
 import type z from "zod";
 import { useForm } from "react-hook-form";
@@ -9,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { changePasswordSchema } from "../../../schema/auth.schema";
 import { changeInputs } from "./change.inputs.ts";
 import AuthButton from "../../../components/AuthButton.tsx";
+import type { AxiosError } from "axios";
+import type { IUsersResponse } from "../../../interfaces/users.interface.ts";
 
 export default function ChangePassword() {
   const navigate = useNavigate();
@@ -30,14 +31,14 @@ export default function ChangePassword() {
       });
       toast.success(response.data.message || "Password changed successfully!");
       navigate("/login");
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || "Something went wrong");
+    } catch (error) {
+      const axiosError = error as AxiosError<IUsersResponse>;
+      toast.error(axiosError.response?.data?.message || "Something went wrong");
     }
   };
 
   return (
     <>
-   
       <form onSubmit={handleSubmit(onSubmit)}>
         {changeInputs.map((input) => (
           <InputField
@@ -53,7 +54,7 @@ export default function ChangePassword() {
         ))}
 
         <div className="text-center text-white mt-10">
-          <AuthButton isSubmitting={isSubmitting} label="Verify" /> 
+          <AuthButton isSubmitting={isSubmitting} label="Verify" />
         </div>
       </form>
     </>
