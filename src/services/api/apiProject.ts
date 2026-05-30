@@ -1,9 +1,9 @@
-import type { NewProject, Project } from "../../interfaces/project.interface";
+import type { NewProject } from "../../interfaces/project.interface";
 import axiosClient from "./axiosClient";
 
-// GET  projects 
-export const getProjects = (params:object) => {
-  return axiosClient.get('/Project/manager',{params});
+// GET  projects
+export const getProjects = (params: object) => {
+  return axiosClient.get("/Project/manager", { params });
 };
 export const getProjectsByEmployee = (params: object) => {
   return axiosClient.get("/Project/employee", { params });

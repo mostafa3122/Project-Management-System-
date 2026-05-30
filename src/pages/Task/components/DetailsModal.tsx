@@ -1,15 +1,14 @@
 // DetailsModal.tsx
 import {
-  BiX,
-  BiClipboard,
-  BiFolderOpen,
   BiCalendar,
-  BiInfoCircle,
+  BiClipboard,
   BiEdit,
+  BiFolderOpen,
+  BiInfoCircle,
   BiTask,
+  BiX,
 } from "react-icons/bi";
 import StatusBadge from "../../../shared/StatusBadge/StatusBadge";
-
 
 type ModalVariant = "task" | "project";
 
@@ -109,7 +108,11 @@ export default function DetailsModal({
                 Status
               </span>
               <div className="mt-2">
-                <StatusBadge status={data.status || (variant === "project" ? "Public" : "")} />
+                <StatusBadge
+                  status={
+                    data.status || (variant === "project" ? "Public" : "")
+                  }
+                />
               </div>
             </div>
 
@@ -189,7 +192,10 @@ export default function DetailsModal({
                 onClick={onEdit}
                 className="px-6 py-2 border border-gray-300 dark:border-slate-600 hover:bg-gray-50 dark:hover:bg-slate-700 text-gray-700 dark:text-gray-300 transition-colors rounded-full text-xs font-semibold cursor-pointer flex items-center gap-1.5 font-montserrat"
               >
-                <BiEdit size={14} className="text-gray-500 dark:text-gray-400" />
+                <BiEdit
+                  size={14}
+                  className="text-gray-500 dark:text-gray-400"
+                />
                 <span>Edit</span>
               </button>
             )}

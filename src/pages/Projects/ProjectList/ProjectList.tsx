@@ -18,10 +18,8 @@ import {
   BiShow,
   BiTrash,
 } from "react-icons/bi";
-import type { ITask } from "../../../interfaces/task.interface";
-import TaskDetailsModal from "../../Task/components/DetailsModal";
-import DetailsModal from "../../Task/components/DetailsModal";
 import { userContext } from "../../../context/userContext";
+import DetailsModal from "../../Task/components/DetailsModal";
 export default function ProjectList() {
   const navigate = useNavigate();
   const [allProjects, setAllProjects] = useState<Project[]>([]);
@@ -53,6 +51,7 @@ export default function ProjectList() {
   // get all projects list
   const { userData } = useContext(userContext) || {};
   const role = userData?.group?.name;
+  const isManager = userData?.group?.name === "Manager";
   const getProjectsList = async () => {
     try {
       setLoading(true);
@@ -450,8 +449,11 @@ export default function ProjectList() {
           isOpen={isViewModalOpen}
           onClose={() => setIsViewModalOpen(false)}
           data={selectedProject}
-          onEdit={() =>
-            navigate(`/dashboard/projects/edit/${selectedProject?.id}`)
+          onEdit={
+            isManager
+              ? () =>
+                  navigate(`/dashboard/projects/edit/${selectedProject?.id}`)
+              : undefined
           }
         />
         {/*  modal delete */}

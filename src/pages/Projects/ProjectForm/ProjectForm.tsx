@@ -1,15 +1,14 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import type { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
-import type { AxiosError } from "axios";
-import type { NewProject } from "../../../interfaces/project.interface";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { FiChevronLeft } from "react-icons/fi";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { apiProjects} from "../../../services/api";
+import { z } from "zod";
+import type { NewProject } from "../../../interfaces/project.interface";
+import { apiProjects } from "../../../services/api";
 import Loading from "../../../shared/Loading/Loading";
-
 
 export default function ProjectForm() {
   const navigate = useNavigate();
@@ -18,7 +17,7 @@ export default function ProjectForm() {
 
   const isEdit = pathname.includes("edit");
   const isView = pathname.includes("view");
-  const isAdd  = pathname.includes("add");
+  const isAdd = pathname.includes("add");
 
   const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -44,30 +43,28 @@ export default function ProjectForm() {
   } = useForm<NewProject>({
     resolver: zodResolver(formSchema),
   });
-  
+
   // GET PROJECT (VIEW / EDIT)
   const fetchProject = async () => {
     if (!id) return;
 
     try {
       setLoading(true);
-      const res = await apiProjects.getProjectById(Number(id));   
+      const res = await apiProjects.getProjectById(Number(id));
       console.log(res.data);
       const data = res?.data;
 
       if (!data) return;
 
-      setValue("title", data.title ?? "");           
+      setValue("title", data.title ?? "");
       setValue("description", data.description ?? "");
-
     } catch (error) {
       const axiosError = error as AxiosError<any>;
       toast.error(
         axiosError.response?.data?.message ||
-        axiosError.message ||
-        "Failed to load project"
+          axiosError.message ||
+          "Failed to load project"
       );
-      console.error("GET ERROR:", error);
     } finally {
       setLoading(false);
     }
@@ -77,7 +74,7 @@ export default function ProjectForm() {
     if (isEdit || isView) {
       fetchProject();
     }
-  }, [id, pathname]);             
+  }, [id, pathname]);
 
   // SUBMIT (ADD / EDIT)
   const onSubmit = async (data: NewProject) => {
@@ -94,13 +91,12 @@ export default function ProjectForm() {
       }
 
       navigate("/dashboard/projects");
-
     } catch (error) {
       const axiosError = error as AxiosError<any>;
       toast.error(
         axiosError.response?.data?.message ||
-        axiosError.message ||
-        "Something went wrong"
+          axiosError.message ||
+          "Something went wrong"
       );
       console.error("SUBMIT ERROR:", error);
     } finally {
@@ -110,7 +106,7 @@ export default function ProjectForm() {
 
   // TITLE
   const getTitle = () => {
-    if (isAdd)  return "Add New Project";
+    if (isAdd) return "Add New Project";
     if (isEdit) return "Edit Project";
     return "View Project";
   };

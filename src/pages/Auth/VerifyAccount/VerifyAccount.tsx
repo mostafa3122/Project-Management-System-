@@ -1,14 +1,15 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import type { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import type z from "zod";
+import AuthButton from "../../../components/AuthButton";
+import type { IUsersResponse } from "../../../interfaces/users.interface";
 import { verifyPasswordSchema } from "../../../schema/auth.schema";
 import { VerifyApi } from "../../../services/api/auth";
-import AuthHeader from "../../../shared/AuthHeader/AuthHeader";
 import InputField from "../../../shared/InputField/InputField";
 import { VerifyInputs } from "./verify.inputs";
-import AuthButton from "../../../components/AuthButton";
 
 export default function VerifyAccount() {
   const navigate = useNavigate();
@@ -26,8 +27,9 @@ export default function VerifyAccount() {
       const response = await VerifyApi(data);
       toast.success(response.data.message || "Account verified successfully!");
       navigate("/login");
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || "Something went wrong");
+    } catch (error) {
+      const axiosError = error as AxiosError<IUsersResponse>;
+      toast.error(axiosError.response?.data?.message || "something went wrong");
     }
   };
 
@@ -48,7 +50,7 @@ export default function VerifyAccount() {
         ))}
 
         <div className="text-center text-white mt-6">
-        <AuthButton isSubmitting={isSubmitting} label="Save" />
+          <AuthButton isSubmitting={isSubmitting} label="Save" />
         </div>
       </form>
     </>

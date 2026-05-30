@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
-import { userContext } from "../../context/userContext";
 import { motion, type Variants } from "framer-motion";
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
+import React, { useContext, useEffect, useState } from "react";
+import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
+import { userContext } from "../../context/userContext";
 import axiosClient from "../../services/api/axiosClient";
 
 interface TaskCount {

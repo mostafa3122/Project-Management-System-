@@ -1,3 +1,4 @@
+import type { AxiosError } from "axios";
 import {
   ChevronsUpDown,
   Eye,
@@ -5,18 +6,17 @@ import {
   MoreVertical,
   Search,
 } from "lucide-react";
-import { GetUsersApi, ToggleStatusApi } from "../../../services/modules/users";
 import { useEffect, useState } from "react";
-import noUser from "../../../assets/user-image.jpg";
 import { FiMail, FiPhone, FiUser, FiX } from "react-icons/fi";
+import { toast } from "react-toastify";
+import noUser from "../../../assets/user-image.jpg";
 import type {
   IUsersResponse,
   UserType,
 } from "../../../interfaces/users.interface";
-import type { AxiosError } from "axios";
-import { toast } from "react-toastify";
-import NoData from "../../../shared/NoData/NoData";
+import { GetUsersApi, ToggleStatusApi } from "../../../services/modules/users";
 import Loading from "../../../shared/Loading/Loading";
+import NoData from "../../../shared/NoData/NoData";
 import Pagination from "../../../shared/Pagination/Pagination";
 import SubHeader from "../../../shared/SubHeader/SubHeader";
 import ConfirmationModal from "../../Projects/DeleteConfirmationModal/DeleteConfirmation";
@@ -95,10 +95,10 @@ export default function UserList() {
         `User ${isCurrentlyActivated ? "blocked" : "unblocked"} successfully!`
       );
     } catch (error) {
-       const axiosError = error as AxiosError<IUsersResponse>;
-       toast.error(
-         axiosError.response?.data?.message || "Failed to update status"
-       );
+      const axiosError = error as AxiosError<IUsersResponse>;
+      toast.error(
+        axiosError.response?.data?.message || "Failed to update status"
+      );
     } finally {
       setToggleLoading(false);
     }

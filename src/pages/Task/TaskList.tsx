@@ -1,25 +1,23 @@
-import { useEffect, useState } from "react";
+import type { AxiosError } from "axios";
+import { useContext, useEffect, useState } from "react";
 import {
   BiDotsHorizontalRounded,
   BiEdit,
   BiFilter,
-  BiPlus,
   BiSearch,
   BiShow,
-  BiTrash,
+  BiTrash
 } from "react-icons/bi";
 import { LuChevronsUpDown } from "react-icons/lu";
-import type { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { userContext } from "../../context/userContext";
 import type { ITask } from "../../interfaces/task.interface";
 import { DeleteTask, GetAllTasks } from "../../services/api/tasks";
-import DeleteConfirmation from "../../shared/DeleteConfirmation/DeleteConfirmation";
 import Loading from "../../shared/Loading/Loading";
 import NoData from "../../shared/NoData/NoData";
 import Pagination from "../../shared/Pagination/Pagination";
 import StatusBadge from "../../shared/StatusBadge/StatusBadge";
-import TaskDetailsModal from "./components/DetailsModal";
 import SubHeader from "../../shared/SubHeader/SubHeader";
 import ConfirmationModal from "../Projects/DeleteConfirmationModal/DeleteConfirmation";
 import DetailsModal from "./components/DetailsModal";
@@ -52,6 +50,8 @@ export default function TaskList() {
   const [deleteLoading, setDeleteLoading] = useState(false);
 
   const [debouncedSearchTitle, setDebouncedSearchTitle] = useState("");
+  const { userData } = useContext(userContext) || {};
+  const isManager = userData?.group?.name === "Manager";
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -429,10 +429,14 @@ export default function TaskList() {
         isOpen={isViewModalOpen}
         onClose={() => setIsViewModalOpen(false)}
         data={selectedTask}
-        onEdit={() => {
-          setIsViewModalOpen(false);
-          navigate(`/dashboard/tasks/edit/${selectedTask?.id}`);
-        }}
+        onEdit={
+          isManager
+            ? () => {
+                setIsViewModalOpen(false);
+                navigate(`/dashboard/tasks/edit/${selectedTask?.id}`);
+              }
+            : undefined
+        }
       />
       {/*  modal delete */}
       <ConfirmationModal
